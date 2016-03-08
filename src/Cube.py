@@ -258,11 +258,11 @@ class Cube:
                 np.copyto(temp[x][2:], self.faces[x][2:])
         elif row == 2:
             for x in range(0,4):
-                np.copyto(temp[x][:1], self.faces[x][:1])
+                np.copyto(temp[x][:2], self.faces[x][:2])
                 np.copyto(temp[x][3], self.faces[x][3])
         elif row == 3:
             for x in range(0,4):
-                np.copyto(temp[x][:2], self.faces[x][:2])
+                np.copyto(temp[x][:3], self.faces[x][:3])
         np.copyto(temp[4:], self.faces[4:])
         np.copyto(self.faces, temp)
 
@@ -286,7 +286,7 @@ class Cube:
                 np.copyto(temp[x][3], self.faces[x][3])
         elif row == 3:
             for x in range(0,4):
-                np.copyto(temp[x][:2], self.faces[x][:2])
+                np.copyto(temp[x][:3], self.faces[x][:3])
         np.copyto(temp[4:], self.faces[4:])
         np.copyto(self.faces, temp)
 
@@ -301,8 +301,8 @@ class Cube:
             tNum = rand.randint(0,17)
             tBool = bool(rand.getrandbits(1))
             self.quarterTurn(tNum,tBool)
-            print('\n'+str(i)+' '+str(tNum)+' '+str(tBool)+'\n------')
-            self.printCube()
+            # print('\n'+str(i)+' '+str(tNum)+' '+str(tBool)+'\n------')
+            # self.printCube()
 
     def fitness():
         print("fit")
