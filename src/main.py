@@ -18,8 +18,12 @@ testcube = Cube()
 
 testcube.printCube()
 
-testcube.scramble(10)
+testcube.fitness()
+
+testcube.scramble(50)
 
 print()
 
 testcube.printCube()
+
+testcube.fitness()

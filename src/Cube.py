@@ -1,5 +1,6 @@
 import numpy as np
 import random as rand
+from collections import Counter
 
 class Cube:
 
@@ -304,5 +305,14 @@ class Cube:
             # print('\n'+str(i)+' '+str(tNum)+' '+str(tBool)+'\n------')
             # self.printCube()
 
-    def fitness():
-        print("fit")
+    def fitness(self):
+        centers = self.faces[:,1:3,1:3]
+        tempCent = np.full([6,4], '', dtype=np.str)
+        centCounts = np.full([6,2,4], '', dtype=np.str)
+        for i in range(0,6):
+            np.copyto(tempCent[i], np.hstack((centers[i][0],centers[i][1])))
+        for x in range(0,6):
+            keys = list(sorted(Counter(tempCent[x]).keys()))[::-1]
+            values = list(sorted(Counter(tempCent[x]).values()))[::-1]
+            print(keys)
+            print(values)
