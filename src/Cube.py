@@ -1,5 +1,6 @@
 import numpy as np
 import random as rand
+import operator as op
 from collections import Counter
 
 class Cube:
@@ -30,10 +31,20 @@ class Cube:
                                 ['g','g','g','g'],
                                 ['g','g','g','g']]])
 
+        self.moves = np.array(['U','D','L','R','F','B','u','d','l','r','f','b','Uu','Dd','Ll','Rr','Ff','Bb','U2','D2','L2','R2','F2','B2','u2','d2','l2','r2','f2','b2','Uu2','Dd2','Ll2','Rr2','Ff2','Bb2'])
+
     def printCube(self):
         print('\n'.join([''.join(['{:3}'.format(item) for item in row]) for row in self.faces[4]]))
-        [print('\n'.join([''.join(['{:3}'.format(self.faces[x][y][z]) for x in range(0,4) for z in range(0,4)])])) for y in range(0,4)]
+        for y in range(0,4):
+            print('\n'.join([''.join(['{:3}'.format(self.faces[x][y][z]) for x in range(0,4) for z in range(0,4)])]))
         print('\n'.join([''.join(['{:3}'.format(item) for item in row]) for row in self.faces[5]]))
+
+    def move(self,moveType,direction):
+        if moveType <= 17:
+            self.quarterTurn(moveType,direction)
+        else:
+            self.quarterTurn(moveType%18,direction)
+            self.quarterTurn(moveType%18,direction)
 
     def quarterTurn(self,moveType,direction):
         if moveType == 0: #U
@@ -299,20 +310,92 @@ class Cube:
 
     def scramble(self,n):
         for i in range(0,n):
-            tNum = rand.randint(0,17)
+            tNum = rand.randint(0,35)
             tBool = bool(rand.getrandbits(1))
-            self.quarterTurn(tNum,tBool)
-            # print('\n'+str(i)+' '+str(tNum)+' '+str(tBool)+'\n------')
+            self.move(tNum,tBool)
+            # print('\n'+str(i)+' '+str(tNum)+' '+self.moves[tNum]+' '+str(tBool)+'\n------')
             # self.printCube()
 
-    def fitness(self):
+    def fitness1(self):
+        faces = self.faces.tolist()
+        goalFaces = ['w','r','y','o','b','g']
+        faceTotals = [sum([self.faces[x][y].tolist().count(goalFaces[x]) for y in range(0,4)]) for x in range(0,6)]
+        print(faceTotals)
+        print(sum(faceTotals))
+        print(sum(faceTotals)/96.0)
+
+    def fitness2(self):
+        centerOptions = ['w','r','y','o','b','g']
         centers = self.faces[:,1:3,1:3]
         tempCent = np.full([6,4], '', dtype=np.str)
-        centCounts = np.full([6,2,4], '', dtype=np.str)
+        faceColors = np.full([6], '', dtype=np.str)
         for i in range(0,6):
             np.copyto(tempCent[i], np.hstack((centers[i][0],centers[i][1])))
-        for x in range(0,6):
-            keys = list(sorted(Counter(tempCent[x]).keys()))[::-1]
-            values = list(sorted(Counter(tempCent[x]).values()))[::-1]
-            print(keys)
-            print(values)
+        tempCentL = tempCent.tolist()
+        dicts = [{'w': row.count('w'), 'r': row.count('r'), 'y': row.count('y'), 'o': row.count('o'), 'b': row.count('b'), 'g': row.count('g')} for row in tempCentL]
+        sorted_dicts = [sorted(el.items(), key=op.itemgetter(1), reverse=True) for el in dicts]
+        has_space = True
+        while has_space:
+            for i in range(0,6):
+                if sorted_dicts[i][0][1] == 3 or sorted_dicts[i][0][1] == 4:
+                    faceColors[i] = sorted_dicts[i][0][0]
+            for i in range(0,6):
+                if sorted_dicts[i][0][1] == 2 and sorted_dicts[i][1][1] == 1:
+                    rand_pos = rand.randint(0,3)
+                    if sorted_dicts[i][rand_pos%3][0] not in faceColors:
+                        faceColors[i] = sorted_dicts[i][rand_pos%3][0]
+                elif sorted_dicts[i][0][1] == 2 and sorted_dicts[i][1][1] == 2:
+                    rand_pos = rand.randint(0,1)
+                    if sorted_dicts[i][rand_pos][0] not in faceColors:
+                        faceColors[i] = sorted_dicts[i][rand_pos][0]
+                elif sorted_dicts[i][0][1] == 1 and sorted_dicts[i][1][1] == 1:
+                    rand_pos = rand.randint(0,3)
+                    if sorted_dicts[i][rand_pos][0] not in faceColors:
+                        faceColors[i] = sorted_dicts[i][rand_pos][0]
+            has_space = '' in faceColors
+        # for i in range(0,6):
+        #     if sorted_dicts[i][0][1] == 3 or sorted_dicts[i][0][1] == 4:
+        #         faceColors[i] = sorted_dicts[i][0][0]
+        # for i in range(0,6):
+        #     if (sorted_dicts[i][0][1] == 2 and sorted_dicts[i][1][1] == 2):
+        #         pos = bool(rand.getrandbits(1))
+        #         if pos:
+        #             if sorted_dicts[i][0][0] not in faceColors:
+        #                 faceColors[i] = sorted_dicts[i][0][0]
+        #             else:
+        #                 faceColors[i] = sorted_dicts[i][1][0]
+        #         else:
+        #             if sorted_dicts[i][1][0] not in faceColors:
+        #                 faceColors[i] = sorted_dicts[i][1][0]
+        #             else:
+        #                 faceColors[i] = sorted_dicts[i][0][0]
+        # for i in range(0,6):
+        #     if (sorted_dicts[i][0][1] == 2 and sorted_dicts[i][1][1] == 1):
+        #         if sorted_dicts[i][0][0] not in faceColors:
+        #             faceColors[i] = sorted_dicts[i][0][0]
+        #         else:
+        #             pos = bool(rand.getrandbits(1))
+        #             if pos:
+        #                 if sorted_dicts[i][1][0] not in faceColors:
+        #                     faceColors[i] = sorted_dicts[i][1][0]
+        #                 else:
+        #                     faceColors[i] = sorted_dicts[i][2][0]
+        #             else:
+        #                 if sorted_dicts[i][2][0] not in faceColors:
+        #                     faceColors[i] = sorted_dicts[i][2][0]
+        #                 else:
+        #                     faceColors[i] = sorted_dicts[i][1][0]
+        # for i in range(0,6):
+        #     if sorted_dicts[i][0][1] == 1:
+        #         pos = [0,1,2,3]
+        #         rand.shuffle(pos)
+        #         for el in pos:
+        #             if sorted_dicts[i][el][0] not in faceColors:
+        #                 faceColors[i] = sorted_dicts[i][el][0]
+        #                 break
+        # for opt in centerOptions:
+        #     if opt not in faceColors:
+        #         faceColors[np.where(faceColors == '')] = opt
+        faceTotals = [sum([self.faces[x][y].tolist().count(faceColors[x]) for y in range(0,4)]) for x in range(0,6)]
+        print(faceColors)
+        print(faceTotals)
