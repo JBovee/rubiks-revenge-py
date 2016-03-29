@@ -1,7 +1,6 @@
 import numpy as np
 import random as rand
 import operator as op
-from collections import Counter
 
 class Cube:
 
@@ -31,7 +30,7 @@ class Cube:
                                 ['g','g','g','g'],
                                 ['g','g','g','g']]])
 
-        self.moves = np.array(['U','D','L','R','F','B','u','d','l','r','f','b','Uu','Dd','Ll','Rr','Ff','Bb','U2','D2','L2','R2','F2','B2','u2','d2','l2','r2','f2','b2','Uu2','Dd2','Ll2','Rr2','Ff2','Bb2'])
+        self.moves = np.array(['U','D','L','R','F','B','u','d','l','r','f','b','Uu','Dd','Ll','Rr','Ff','Bb','U\'','D\'','L\'','R\'','F\'','B\'','u\'','d\'','l\'','r\'','f\'','b\'','Uu\'','Dd\'','Ll\'','Rr\'','Ff\'','Bb\'','U2','D2','L2','R2','F2','B2','u2','d2','l2','r2','f2','b2','Uu2','Dd2','Ll2','Rr2','Ff2','Bb2'])
 
     def printCube(self):
         print('\n'.join([''.join(['{:3}'.format(item) for item in row]) for row in self.faces[4]]))
@@ -39,280 +38,408 @@ class Cube:
             print('\n'.join([''.join(['{:3}'.format(self.faces[x][y][z]) for x in range(0,4) for z in range(0,4)])]))
         print('\n'.join([''.join(['{:3}'.format(item) for item in row]) for row in self.faces[5]]))
 
-    def move(self,moveType,direction):
-        if moveType <= 17:
-            self.quarterTurn(moveType,direction)
-        else:
-            self.quarterTurn(moveType%18,direction)
-            self.quarterTurn(moveType%18,direction)
+    def move(self,moveType):
+        tempFaces = self.faces
+        self.faces = self.moveTypes(tempFaces,moveType)
 
-    def quarterTurn(self,moveType,direction):
+    def moveTypes(self,faces,moveType):
         if moveType == 0: #U
-            if direction:
-                self.xRegTurn(0)
-                self.rotateFace(4,True)
-            else:
-                self.xAntiTurn(0)
-                self.rotateFace(4,False)
+            faces = self.xRegTurn(faces,0)
+            faces = self.rotateFace(faces,4,True)
         elif moveType == 1: #D
-            if direction:
-                self.xAntiTurn(3)
-                self.rotateFace(5,True)
-            else:
-                self.xRegTurn(3)
-                self.rotateFace(5,False)
+            faces = self.xAntiTurn(faces,3)
+            faces = self.rotateFace(faces,5,True)
         elif moveType == 2: #L
-            self.XtoY()
-            if direction:
-                self.xRegTurn(0)
-                self.rotateFace(4,True)
-            else:
-                self.xAntiTurn(0)
-                self.rotateFace(4,False)
-            self.YtoX()
+            faces = self.XtoY(faces)
+            faces = self.xRegTurn(faces,0)
+            faces = self.rotateFace(faces,4,True)
+            faces = self.YtoX(faces)
         elif moveType == 3: #R
-            self.XtoY()
-            if direction:
-                self.xAntiTurn(3)
-                self.rotateFace(5,True)
-            else:
-                self.xRegTurn(3)
-                self.rotateFace(5,False)
-            self.YtoX()
+            faces = self.XtoY(faces)
+            faces = self.xAntiTurn(faces,3)
+            faces = self.rotateFace(faces,5,True)
+            faces = self.YtoX(faces)
         elif moveType == 4: #F
-            self.XtoZ()
-            if direction:
-                self.xRegTurn(0)
-                self.rotateFace(4,True)
-            else:
-                self.xAntiTurn(0)
-                self.rotateFace(4,False)
-            self.ZtoX()
+            faces = self.XtoZ(faces)
+            faces = self.xRegTurn(faces,0)
+            faces = self.rotateFace(faces,4,True)
+            faces = self.ZtoX(faces)
         elif moveType == 5: #B
-            self.XtoZ()
-            if direction:
-                self.xAntiTurn(3)
-                self.rotateFace(5,True)
-            else:
-                self.xRegTurn(3)
-                self.rotateFace(5,False)
-            self.ZtoX()
+            faces = self.XtoZ(faces)
+            faces = self.xAntiTurn(faces,3)
+            faces = self.rotateFace(faces,5,True)
+            faces = self.ZtoX(faces)
         elif moveType == 6: #u
-            if direction:
-                self.xRegTurn(1)
-            else:
-                self.xAntiTurn(1)
+            faces = self.xRegTurn(faces,1)
         elif moveType == 7: #d
-            if direction:
-                self.xAntiTurn(2)
-            else:
-                self.xRegTurn(2)
+            faces = self.xAntiTurn(faces,2)
         elif moveType == 8: #l
-            self.XtoY()
-            if direction:
-                self.xRegTurn(1)
-            else:
-                self.xAntiTurn(1)
-            self.YtoX()
+            faces = self.XtoY(faces)
+            faces = self.xRegTurn(faces,1)
+            faces = self.YtoX(faces)
         elif moveType == 9: #r
-            self.XtoY()
-            if direction:
-                self.xAntiTurn(2)
-            else:
-                self.xRegTurn(2)
-            self.YtoX()
+            faces = self.XtoY(faces)
+            faces = self.xAntiTurn(faces,2)
+            faces = self.YtoX(faces)
         elif moveType == 10: #f
-            self.XtoZ()
-            if direction:
-                self.xRegTurn(1)
-            else:
-                self.xAntiTurn(1)
-            self.ZtoX()
+            faces = self.XtoZ(faces)
+            faces = self.xRegTurn(faces,1)
+            faces = self.ZtoX(faces)
         elif moveType == 11: #b
-            self.XtoZ()
-            if direction:
-                self.xAntiTurn(2)
-            else:
-                self.xRegTurn(2)
-            self.ZtoX()
+            faces = self.XtoZ(faces)
+            faces = self.xAntiTurn(faces,2)
+            faces = self.ZtoX(faces)
         elif moveType == 12: #Uu
-            if direction:
-                self.xRegTurn(0)
-                self.xRegTurn(1)
-                self.rotateFace(4,True)
-            else:
-                self.xAntiTurn(0)
-                self.xAntiTurn(1)
-                self.rotateFace(4,False)
+            faces = self.xRegTurn(faces,0)
+            faces = self.xRegTurn(faces,1)
+            faces = self.rotateFace(faces,4,True)
         elif moveType == 13: #Dd
-            if direction:
-                self.xAntiTurn(2)
-                self.xAntiTurn(3)
-                self.rotateFace(5,True)
-            else:
-                self.xRegTurn(2)
-                self.xRegTurn(3)
-                self.rotateFace(5,False)
+            faces = self.xAntiTurn(faces,2)
+            faces = self.xAntiTurn(faces,3)
+            faces = self.rotateFace(faces,5,True)
         elif moveType == 14: #Ll
-            self.XtoY()
-            if direction:
-                self.xRegTurn(0)
-                self.xRegTurn(1)
-                self.rotateFace(4,True)
-            else:
-                self.xAntiTurn(0)
-                self.xAntiTurn(1)
-                self.rotateFace(4,False)
-            self.YtoX()
+            faces = self.XtoY(faces)
+            faces = self.xRegTurn(faces,0)
+            faces = self.xRegTurn(faces,1)
+            faces = self.rotateFace(faces,4,True)
+            faces = self.YtoX(faces)
         elif moveType == 15: #Rr
-            self.XtoY()
-            if direction:
-                self.xAntiTurn(2)
-                self.xAntiTurn(3)
-                self.rotateFace(5,True)
-            else:
-                self.xRegTurn(2)
-                self.xRegTurn(3)
-                self.rotateFace(5,False)
-            self.YtoX()
+            faces = self.XtoY(faces)
+            faces = self.xAntiTurn(faces,2)
+            faces = self.xAntiTurn(faces,3)
+            faces = self.rotateFace(faces,5,True)
+            faces = self.YtoX(faces)
         elif moveType == 16: #Ff
-            self.XtoZ()
-            if direction:
-                self.xRegTurn(0)
-                self.xRegTurn(1)
-                self.rotateFace(4,True)
-            else:
-                self.xAntiTurn(0)
-                self.xAntiTurn(1)
-                self.rotateFace(4,False)
-            self.ZtoX()
+            faces = self.XtoZ(faces)
+            faces = self.xRegTurn(faces,0)
+            faces = self.xRegTurn(faces,1)
+            faces = self.rotateFace(faces,4,True)
+            faces = self.ZtoX(faces)
         elif moveType == 17: #Bb
-            self.XtoZ()
-            if direction:
-                self.xAntiTurn(2)
-                self.xAntiTurn(3)
-                self.rotateFace(5,True)
-            else:
-                self.xRegTurn(2)
-                self.xRegTurn(3)
-                self.rotateFace(5,False)
-            self.ZtoX()
+            faces = self.XtoZ(faces)
+            faces = self.xAntiTurn(faces,2)
+            faces = self.xAntiTurn(faces,3)
+            faces = self.rotateFace(faces,5,True)
+            faces = self.ZtoX(faces)
+        elif moveType == 18: #U'
+            faces = self.xAntiTurn(faces,0)
+            faces = self.rotateFace(faces,4,False)
+        elif moveType == 19: #D'
+            faces = self.xRegTurn(faces,3)
+            faces = self.rotateFace(faces,5,False)
+        elif moveType == 20: #L'
+            faces = self.XtoY(faces)
+            faces = self.xAntiTurn(faces,0)
+            faces = self.rotateFace(faces,4,False)
+            faces = self.YtoX(faces)
+        elif moveType == 21: #R'
+            faces = self.XtoY(faces)
+            faces = self.xRegTurn(faces,3)
+            faces = self.rotateFace(faces,5,False)
+            faces = self.YtoX(faces)
+        elif moveType == 22: #F'
+            faces = self.XtoZ(faces)
+            faces = self.xAntiTurn(faces,0)
+            faces = self.rotateFace(faces,4,False)
+            faces = self.ZtoX(faces)
+        elif moveType == 23: #B'
+            faces = self.XtoZ(faces)
+            faces = self.xRegTurn(faces,3)
+            faces = self.rotateFace(faces,5,False)
+            faces = self.ZtoX(faces)
+        elif moveType == 24: #u'
+            faces = self.xAntiTurn(faces,1)
+        elif moveType == 25: #d'
+            faces = self.xRegTurn(faces,2)
+        elif moveType == 26: #l'
+            faces = self.XtoY(faces)
+            faces = self.xAntiTurn(faces,1)
+            faces = self.YtoX(faces)
+        elif moveType == 27: #r'
+            faces = self.XtoY(faces)
+            faces = self.xRegTurn(faces,2)
+            faces = self.YtoX(faces)
+        elif moveType == 28: #f'
+            faces = self.XtoZ(faces)
+            faces = self.xAntiTurn(faces,1)
+            faces = self.ZtoX(faces)
+        elif moveType == 29: #b'
+            faces = self.XtoZ(faces)
+            faces = self.xRegTurn(faces,2)
+            faces = self.ZtoX(faces)
+        elif moveType == 30: #Uu'
+            faces = self.xAntiTurn(faces,0)
+            faces = self.xAntiTurn(faces,1)
+            faces = self.rotateFace(faces,4,False)
+        elif moveType == 31: #Dd'
+            faces = self.xRegTurn(faces,2)
+            faces = self.xRegTurn(faces,3)
+            faces = self.rotateFace(faces,5,False)
+        elif moveType == 32: #Ll'
+            faces = self.XtoY(faces)
+            faces = self.xAntiTurn(faces,0)
+            faces = self.xAntiTurn(faces,1)
+            faces = self.rotateFace(faces,4,False)
+            faces = self.YtoX(faces)
+        elif moveType == 33: #Rr'
+            faces = self.XtoY(faces)
+            faces = self.xRegTurn(faces,2)
+            faces = self.xRegTurn(faces,3)
+            faces = self.rotateFace(faces,5,False)
+            faces = self.YtoX(faces)
+        elif moveType == 34: #Ff'
+            faces = self.XtoZ(faces)
+            faces = self.xAntiTurn(faces,0)
+            faces = self.xAntiTurn(faces,1)
+            faces = self.rotateFace(faces,4,False)
+            faces = self.ZtoX(faces)
+        elif moveType == 35: #Bb'
+            faces = self.XtoZ(faces)
+            faces = self.xRegTurn(faces,2)
+            faces = self.xRegTurn(faces,3)
+            faces = self.rotateFace(faces,5,False)
+            faces = self.ZtoX(faces)
+        elif moveType == 36: #U2
+            faces = self.xRegTurn(faces,0)
+            faces = self.xRegTurn(faces,0)
+            faces = self.rotateFace(faces,4,True)
+            faces = self.rotateFace(faces,4,True)
+        elif moveType == 37: #D2
+            faces = self.xAntiTurn(faces,3)
+            faces = self.xAntiTurn(faces,3)
+            faces = self.rotateFace(faces,5,True)
+            faces = self.rotateFace(faces,5,True)
+        elif moveType == 38: #L2
+            faces = self.XtoY(faces)
+            faces = self.xRegTurn(faces,0)
+            faces = self.xRegTurn(faces,0)
+            faces = self.rotateFace(faces,4,True)
+            faces = self.rotateFace(faces,4,True)
+            faces = self.YtoX(faces)
+        elif moveType == 39: #R2
+            faces = self.XtoY(faces)
+            faces = self.xAntiTurn(faces,3)
+            faces = self.xAntiTurn(faces,3)
+            faces = self.rotateFace(faces,5,True)
+            faces = self.rotateFace(faces,5,True)
+            faces = self.YtoX(faces)
+        elif moveType == 40: #F2
+            faces = self.XtoZ(faces)
+            faces = self.xRegTurn(faces,0)
+            faces = self.xRegTurn(faces,0)
+            faces = self.rotateFace(faces,4,True)
+            faces = self.rotateFace(faces,4,True)
+            faces = self.ZtoX(faces)
+        elif moveType == 41: #B2
+            faces = self.XtoZ(faces)
+            faces = self.xAntiTurn(faces,3)
+            faces = self.xAntiTurn(faces,3)
+            faces = self.rotateFace(faces,5,True)
+            faces = self.rotateFace(faces,5,True)
+            faces = self.ZtoX(faces)
+        elif moveType == 42: #u2
+            faces = self.xRegTurn(faces,1)
+            faces = self.xRegTurn(faces,1)
+        elif moveType == 43: #d2
+            faces = self.xAntiTurn(faces,2)
+            faces = self.xAntiTurn(faces,2)
+        elif moveType == 44: #l2
+            faces = self.XtoY(faces)
+            faces = self.xRegTurn(faces,1)
+            faces = self.xRegTurn(faces,1)
+            faces = self.YtoX(faces)
+        elif moveType == 45: #r2
+            faces = self.XtoY(faces)
+            faces = self.xAntiTurn(faces,2)
+            faces = self.xAntiTurn(faces,2)
+            faces = self.YtoX(faces)
+        elif moveType == 46: #f2
+            faces = self.XtoZ(faces)
+            faces = self.xRegTurn(faces,1)
+            faces = self.xRegTurn(faces,1)
+            faces = self.ZtoX(faces)
+        elif moveType == 47: #b2
+            faces = self.XtoZ(faces)
+            faces = self.xAntiTurn(faces,2)
+            faces = self.xAntiTurn(faces,2)
+            faces = self.ZtoX(faces)
+        elif moveType == 48: #Uu2
+            faces = self.xRegTurn(faces,0)
+            faces = self.xRegTurn(faces,1)
+            faces = self.xRegTurn(faces,0)
+            faces = self.xRegTurn(faces,1)
+            faces = self.rotateFace(faces,4,True)
+            faces = self.rotateFace(faces,4,True)
+        elif moveType == 49: #Dd2
+            faces = self.xAntiTurn(faces,2)
+            faces = self.xAntiTurn(faces,3)
+            faces = self.xAntiTurn(faces,2)
+            faces = self.xAntiTurn(faces,3)
+            faces = self.rotateFace(faces,5,True)
+            faces = self.rotateFace(faces,5,True)
+        elif moveType == 50: #Ll2
+            faces = self.XtoY(faces)
+            faces = self.xRegTurn(faces,0)
+            faces = self.xRegTurn(faces,1)
+            faces = self.xRegTurn(faces,0)
+            faces = self.xRegTurn(faces,1)
+            faces = self.rotateFace(faces,4,True)
+            faces = self.rotateFace(faces,4,True)
+            faces = self.YtoX(faces)
+        elif moveType == 51: #Rr2
+            faces = self.XtoY(faces)
+            faces = self.xAntiTurn(faces,2)
+            faces = self.xAntiTurn(faces,3)
+            faces = self.xAntiTurn(faces,2)
+            faces = self.xAntiTurn(faces,3)
+            faces = self.rotateFace(faces,5,True)
+            faces = self.rotateFace(faces,5,True)
+            faces = self.YtoX(faces)
+        elif moveType == 52: #Ff2
+            faces = self.XtoZ(faces)
+            faces = self.xRegTurn(faces,0)
+            faces = self.xRegTurn(faces,1)
+            faces = self.xRegTurn(faces,0)
+            faces = self.xRegTurn(faces,1)
+            faces = self.rotateFace(faces,4,True)
+            faces = self.rotateFace(faces,4,True)
+            faces = self.ZtoX(faces)
+        elif moveType == 53: #Bb2
+            faces = self.XtoZ(faces)
+            faces = self.xAntiTurn(faces,2)
+            faces = self.xAntiTurn(faces,3)
+            faces = self.xAntiTurn(faces,2)
+            faces = self.xAntiTurn(faces,3)
+            faces = self.rotateFace(faces,5,True)
+            faces = self.rotateFace(faces,5,True)
+            faces = self.ZtoX(faces)
+        return faces
 
-    def XtoY(self):
-        self.rotateFace(0,True)
-        self.rotateFace(2,False)
+    def XtoY(self,faces):
+        faces = self.rotateFace(faces,0,True)
+        faces = self.rotateFace(faces,2,False)
         temp = np.full([4,4], '', dtype=np.str)
-        np.copyto(temp, self.faces[4])
-        np.copyto(self.faces[4], self.faces[3])
-        self.rotateFace(4,True)
-        np.copyto(self.faces[3], self.faces[5])
-        self.rotateFace(3,True)
-        np.copyto(self.faces[5], self.faces[1])
-        self.rotateFace(5,True)
-        np.copyto(self.faces[1], temp)
-        self.rotateFace(1,True)
+        np.copyto(temp, faces[4])
+        np.copyto(faces[4], faces[3])
+        faces = self.rotateFace(faces,4,True)
+        np.copyto(faces[3], faces[5])
+        faces = self.rotateFace(faces,3,True)
+        np.copyto(faces[5], faces[1])
+        faces = self.rotateFace(faces,5,True)
+        np.copyto(faces[1], temp)
+        faces = self.rotateFace(faces,1,True)
+        return faces
 
-    def XtoZ(self):
-        self.rotateFace(1,True)
-        self.rotateFace(3,False)
+    def XtoZ(self,faces):
+        faces = self.rotateFace(faces,1,True)
+        faces = self.rotateFace(faces,3,False)
         temp = np.full([4,4], '', dtype=np.str)
-        np.copyto(temp, self.faces[0])
-        np.copyto(self.faces[0], self.faces[5])
-        np.copyto(self.faces[5], self.faces[2])
-        self.rotateFace(5,False)
-        self.rotateFace(5,False)
-        np.copyto(self.faces[2], self.faces[4])
-        self.rotateFace(2,False)
-        self.rotateFace(2,False)
-        np.copyto(self.faces[4], temp)
+        np.copyto(temp, faces[0])
+        np.copyto(faces[0], faces[5])
+        np.copyto(faces[5], faces[2])
+        faces = self.rotateFace(faces,5,False)
+        faces = self.rotateFace(faces,5,False)
+        np.copyto(faces[2], faces[4])
+        faces = self.rotateFace(faces,2,False)
+        faces = self.rotateFace(faces,2,False)
+        np.copyto(faces[4], temp)
+        return faces
 
-    def YtoX(self):
-        self.rotateFace(0,False)
-        self.rotateFace(2,True)
+    def YtoX(self,faces):
+        faces = self.rotateFace(faces,0,False)
+        faces = self.rotateFace(faces,2,True)
         temp = np.full([4,4], '', dtype=np.str)
-        np.copyto(temp, self.faces[4])
-        np.copyto(self.faces[4], self.faces[1])
-        self.rotateFace(4,False)
-        np.copyto(self.faces[1], self.faces[5])
-        self.rotateFace(1,False)
-        np.copyto(self.faces[5], self.faces[3])
-        self.rotateFace(5,False)
-        np.copyto(self.faces[3], temp)
-        self.rotateFace(3,False)
+        np.copyto(temp, faces[4])
+        np.copyto(faces[4], faces[1])
+        faces = self.rotateFace(faces,4,False)
+        np.copyto(faces[1], faces[5])
+        faces = self.rotateFace(faces,1,False)
+        np.copyto(faces[5], faces[3])
+        faces = self.rotateFace(faces,5,False)
+        np.copyto(faces[3], temp)
+        faces = self.rotateFace(faces,3,False)
+        return faces
 
-    def ZtoX(self):
-        self.rotateFace(1,False)
-        self.rotateFace(3,True)
+    def ZtoX(self,faces):
+        faces = self.rotateFace(faces,1,False)
+        faces = self.rotateFace(faces,3,True)
         temp = np.full([4,4], '', dtype=np.str)
-        np.copyto(temp, self.faces[0])
-        np.copyto(self.faces[0], self.faces[4])
-        np.copyto(self.faces[4], self.faces[2])
-        self.rotateFace(4,False)
-        self.rotateFace(4,False)
-        np.copyto(self.faces[2], self.faces[5])
-        self.rotateFace(2,False)
-        self.rotateFace(2,False)
-        np.copyto(self.faces[5], temp)
+        np.copyto(temp, faces[0])
+        np.copyto(faces[0], faces[4])
+        np.copyto(faces[4], faces[2])
+        faces = self.rotateFace(faces,4,False)
+        faces = self.rotateFace(faces,4,False)
+        np.copyto(faces[2], faces[5])
+        faces = self.rotateFace(faces,2,False)
+        faces = self.rotateFace(faces,2,False)
+        np.copyto(faces[5], temp)
+        return faces
 
-    def xRegTurn(self,row):
+    def xRegTurn(self,faces,row):
         temp = np.full([6,4,4], '', dtype=np.str)
         tempFace = np.full([4,4], '', dtype=np.str)
-        np.copyto(tempFace, self.faces[0][:])
+        np.copyto(tempFace, faces[0][:])
         for x in range(0,3):
-            np.copyto(temp[x][row], self.faces[x+1][row])
+            np.copyto(temp[x][row], faces[x+1][row])
         np.copyto(temp[3][:], tempFace)
         if row == 0:
             for x in range(0,4):
-                np.copyto(temp[x][1:], self.faces[x][1:])
+                np.copyto(temp[x][1:], faces[x][1:])
         elif row == 1:
             for x in range(0,4):
-                np.copyto(temp[x][0], self.faces[x][0])
-                np.copyto(temp[x][2:], self.faces[x][2:])
+                np.copyto(temp[x][0], faces[x][0])
+                np.copyto(temp[x][2:], faces[x][2:])
         elif row == 2:
             for x in range(0,4):
-                np.copyto(temp[x][:2], self.faces[x][:2])
-                np.copyto(temp[x][3], self.faces[x][3])
+                np.copyto(temp[x][:2], faces[x][:2])
+                np.copyto(temp[x][3], faces[x][3])
         elif row == 3:
             for x in range(0,4):
-                np.copyto(temp[x][:3], self.faces[x][:3])
-        np.copyto(temp[4:], self.faces[4:])
-        np.copyto(self.faces, temp)
+                np.copyto(temp[x][:3], faces[x][:3])
+        np.copyto(temp[4:], faces[4:])
+        np.copyto(faces, temp)
+        return faces
 
-    def xAntiTurn(self,row):
+    def xAntiTurn(self,faces,row):
         temp = np.full([6,4,4], '', dtype=np.str)
         tempFace = np.full([4,4], '', dtype=np.str)
-        np.copyto(tempFace, self.faces[3][:])
+        np.copyto(tempFace, faces[3][:])
         for x in range(3,0,-1):
-            np.copyto(temp[x][row], self.faces[x-1][row])
+            np.copyto(temp[x][row], faces[x-1][row])
         np.copyto(temp[0][:], tempFace)
         if row == 0:
             for x in range(0,4):
-                np.copyto(temp[x][1:], self.faces[x][1:])
+                np.copyto(temp[x][1:], faces[x][1:])
         elif row == 1:
             for x in range(0,4):
-                np.copyto(temp[x][0], self.faces[x][0])
-                np.copyto(temp[x][2:], self.faces[x][2:])
+                np.copyto(temp[x][0], faces[x][0])
+                np.copyto(temp[x][2:], faces[x][2:])
         elif row == 2:
             for x in range(0,4):
-                np.copyto(temp[x][:2], self.faces[x][:2])
-                np.copyto(temp[x][3], self.faces[x][3])
+                np.copyto(temp[x][:2], faces[x][:2])
+                np.copyto(temp[x][3], faces[x][3])
         elif row == 3:
             for x in range(0,4):
-                np.copyto(temp[x][:3], self.faces[x][:3])
-        np.copyto(temp[4:], self.faces[4:])
-        np.copyto(self.faces, temp)
+                np.copyto(temp[x][:3], faces[x][:3])
+        np.copyto(temp[4:], faces[4:])
+        np.copyto(faces, temp)
+        return faces
 
-    def rotateFace(self,face, direction):
+    def rotateFace(self,faces,face,direction):
         if direction:
-            self.faces[face] = np.rot90(self.faces[face],3)
+            # tempFace = np.rot90(faces[face],3)
+            tempFace = np.rot90(faces[face])
+            tempFace = np.rot90(faces[face])
+            tempFace = np.rot90(faces[face])
         else:
-            self.faces[face] = np.rot90(self.faces[face])
+            tempFace = np.rot90(faces[face])
+        np.copyto(faces[face],tempFace)
+        return faces
 
     def scramble(self,n):
         for i in range(0,n):
-            tNum = rand.randint(0,35)
-            tBool = bool(rand.getrandbits(1))
-            self.move(tNum,tBool)
+            tNum = rand.randint(0,54)
+            self.move(tNum)
 
     def faceFitness(self,*args):
         if len(args) == 1 and isinstance(args[0], int):
@@ -324,10 +451,9 @@ class Cube:
             flatFace = self.faces[args[0]].flatten().tolist()
             return flatFace.count(args[1])
 
-    def fitness1(self):
-        faces = self.faces.tolist()
+    def fitness1(self,faces):
         goalFaces = ['w','r','y','o','b','g']
-        faceTotals = [sum([self.faces[x][y].tolist().count(goalFaces[x]) for y in range(0,4)]) for x in range(0,6)]
+        faceTotals = [sum([faces[x][y].tolist().count(goalFaces[x]) for y in range(0,4)]) for x in range(0,6)]
         return sum(faceTotals)
 
     def fitness2(self):
