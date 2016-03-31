@@ -25,4 +25,5 @@ testcube = Cube()
 
 for i in range(0,10):
     testcube.scramble(20)
-    testcube.fitness2()
+    print("------------------------------------")
+    testcube.printCube()
