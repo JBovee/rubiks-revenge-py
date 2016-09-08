@@ -38,6 +38,12 @@ class Cube:
             print('\n'.join([''.join(['{:3}'.format(self.faces[x][y][z]) for x in range(0,4) for z in range(0,4)])]))
         print('\n'.join([''.join(['{:3}'.format(item) for item in row]) for row in self.faces[5]]))
 
+    def getFaces(self):
+        return self.faces
+
+    def setFaces(self,faces):
+        np.copyto(self.faces, faces)
+
     def move(self,moveType):
         tempFaces = self.faces
         self.faces = self.moveTypes(tempFaces,moveType)
@@ -439,6 +445,7 @@ class Cube:
     def scramble(self,n):
         for i in range(0,n):
             tNum = rand.randint(0,54)
+            print('\n ' + str(tNum) + '|' + self.moves[tNum] + '\n----------------------------------')
             self.move(tNum)
 
     def faceFitness(self,*args):

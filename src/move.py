@@ -393,3 +393,8 @@ def rotateFace(faces,face,direction):
     np.copyto(faces[face],tempFace)
     return faces
 
+def printCube(faces):
+    print('\n'.join([''.join(['{:3}'.format(item) for item in row]) for row in faces[4]]))
+    for y in range(0,4):
+        print('\n'.join([''.join(['{:3}'.format(faces[x][y][z]) for x in range(0,4) for z in range(0,4)])]))
+    print('\n'.join([''.join(['{:3}'.format(item) for item in row]) for row in faces[5]]))

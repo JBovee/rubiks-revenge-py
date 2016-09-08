@@ -31,19 +31,6 @@ def printMoves():
     print(''.join(['{:5}'.format(str(num)) for num in xrange(36,54)]))
     print(''.join(['{:5}'.format(moves[num]) for num in xrange(36,54)]))
 
-testcube = Cube()
-cleancube = Cube()
-
-testcube.scramble(2)
-
-# for i in xrange(0,3):
-#     temp = rand.randint(0,54)
-#     testcube.move(temp)
-#     print('\n' + str(temp) + ' '+moves[temp]+'\n--------')
-#     testcube.printCube()
-
-# printMoves()
-
 err_accum = Util.ErrorAccumulator()
 
 def fitness1(faces):
@@ -112,17 +99,27 @@ def eval_func(chromosome):
     err_accum.reset()
     code_comp = chromosome.getCompiledCode()
 
-    faces = testcube.faces
     evaluated   = eval(code_comp)
-    target      = cleancube.faces
+    target      = cleanfaces
     err_accum  += (fitness1(target), fitness1(evaluated))
 
     return err_accum.getRMSE()
 
 def main_run():
+    global faces
+    global cleanfaces
+    testcube = Cube()
+    cube2 = Cube()
+    cleancube = Cube()
+    cleanfaces = cleancube.getFaces()
+
+    testcube.move(3)
+    cube2.setFaces(testcube.getFaces())
+    faces = testcube.getFaces()
     testcube.printCube()
+
     genome = GTree.GTreeGP()
-    genome.setParams(max_depth=4, method="ramped")
+    genome.setParams(max_depth=8, method="ramped")
     genome.evaluator.set(eval_func)
 
     ga = GSimpleGA.GSimpleGA(genome)
@@ -130,44 +127,18 @@ def main_run():
                  gp_function_prefix = "gp")
 
     ga.setMinimax(Consts.minimaxType["minimize"])
-    ga.setGenerations(50)
+    ga.setGenerations(10)
     ga.setCrossoverRate(1.0)
     ga.setMutationRate(0.25)
-    ga.setPopulationSize(100)
+    ga.setPopulationSize(50)
 
     ga(freq_stats=10)
     best = ga.bestIndividual()
     print best
+    print best
     testcube.printCube()
+    cleancube.printCube()
+    cube2.printCube()
 
 if __name__ == "__main__":
    main_run()
-
-# Traceback (most recent call last):
-#   File ".\main.py", line 145, in <module>
-#     main_run()
-#   File ".\main.py", line 138, in main_run
-#     ga(freq_stats=10)
-#   File "C:\Python27\lib\site-packages\pyevolve\GSimpleGA.py", line 281, in __call__
-#     return self.evolve(kwargs.get("freq_stats"))
-#   File "C:\Python27\lib\site-packages\pyevolve\GSimpleGA.py", line 755, in evolve
-#     self.internalPop.evaluate()
-#   File "C:\Python27\lib\site-packages\pyevolve\GPopulation.py", line 378, in evaluate
-#
-#     ind.evaluate(**args)
-#   File "C:\Python27\lib\site-packages\pyevolve\GenomeBase.py", line 138, in evaluate
-#     for it in self.evaluator.applyFunctions(self, **args):
-#   File "C:\Python27\lib\site-packages\pyevolve\FunctionSlot.py", line 180, in applyFunctions
-#     yield f(obj, **args)
-#   File ".\main.py", line 116, in eval_func
-#     evaluated   = eval(code_comp)
-#   File "<string>", line 1, in <module>
-#   File ".\main.py", line 51, in gp_R
-#     def gp_R(faces): return testcube.fitness1(testcube.moveTypes(faces,3))
-#   File "D:\School\College\Capstone\rubiks-revenge-py\src\Cube.py", line 58, in moveTypes
-#     faces = self.XtoY(faces)
-#   File "D:\School\College\Capstone\rubiks-revenge-py\src\Cube.py", line 319, in XtoY
-#     faces = self.rotateFace(faces,0,True)
-#   File "D:\School\College\Capstone\rubiks-revenge-py\src\Cube.py", line 431, in rotateFace
-#     tempFace = np.rot90(faces[face])
-# TypeError: 'int' object has no attribute '__getitem__'
