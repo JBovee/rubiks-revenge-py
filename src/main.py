@@ -110,7 +110,6 @@ def main_run():
     global cleanfaces
     testcube = Cube()
     testcube.printCube()
-    print(testcube.getFaces())
     #cube2 = Cube()
     #cleancube = Cube()
     #cleanfaces = cleancube.getFaces()
@@ -119,7 +118,6 @@ def main_run():
     #cube2.setFaces(testcube.getFaces())
     #faces = testcube.getFaces()
     testcube.printCube()
-    print(testcube.getFaces())
 
 '''
     genome = GTree.GTreeGP()

@@ -441,8 +441,8 @@ class Cube:
         if direction:
             # tempFace = np.rot90(faces[face],3)
             tempFace = np.rot90(faces[face])
-            tempFace = np.rot90(faces[face])
-            tempFace = np.rot90(faces[face])
+            tempFace = np.rot90(tempFace)
+            tempFace = np.rot90(tempFace)
         else:
             tempFace = np.rot90(faces[face])
         np.copyto(faces[face],tempFace)
