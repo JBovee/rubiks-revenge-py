@@ -1,3 +1,4 @@
+from __future__ import print_function
 import numpy as np
 import random as rand
 import operator as op
@@ -34,9 +35,14 @@ class Cube:
 
     def printCube(self):
         print('\n'.join([''.join(['{:3}'.format(item) for item in row]) for row in self.faces[4]]))
+	print('-  -  -  -')
         for y in range(0,4):
-            print('\n'.join([''.join(['{:3}'.format(self.faces[x][y][z]) for x in range(0,4) for z in range(0,4)])]))
+	    for x in range(0,4):
+		print(''.join(['{:3}'.format(self.faces[x][y][z]) for z in range(0,3)])+self.faces[x][y][3]+' | ',end="")
+	    print()
+	print('-  -  -  -')
         print('\n'.join([''.join(['{:3}'.format(item) for item in row]) for row in self.faces[5]]))
+	print()
 
     def getFaces(self):
         return self.faces
