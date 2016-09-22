@@ -109,17 +109,16 @@ def main_run():
     global faces
     global cleanfaces
     testcube = Cube()
-    testcube.printCube()
-    #cube2 = Cube()
-    #cleancube = Cube()
-    #cleanfaces = cleancube.getFaces()
+    cube2 = Cube()
+    cleancube = Cube()
+    cleanfaces = cleancube.getFaces()
 
     testcube.move(3)
-    #cube2.setFaces(testcube.getFaces())
-    #faces = testcube.getFaces()
+    testcube.move(3)
+    cube2.setFaces(testcube.getFaces())
+    faces = testcube.getFaces()
     testcube.printCube()
 
-'''
     genome = GTree.GTreeGP()
     genome.setParams(max_depth=8, method="ramped")
     genome.evaluator.set(eval_func)
@@ -142,7 +141,6 @@ def main_run():
     testcube.printCube()
     cleancube.printCube()
     cube2.printCube()
-'''
 
 if __name__ == "__main__":
    main_run()

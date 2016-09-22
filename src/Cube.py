@@ -31,6 +31,8 @@ class Cube:
                                 ['g','g','g','g'],
                                 ['g','g','g','g']]])
 
+        self.temp = np.full([6,4,4], '', dtype=np.str)
+
         self.moves = np.array(['U','D','L','R','F','B','u','d','l','r','f','b','Uu','Dd','Ll','Rr','Ff','Bb','U\'','D\'','L\'','R\'','F\'','B\'','u\'','d\'','l\'','r\'','f\'','b\'','Uu\'','Dd\'','Ll\'','Rr\'','Ff\'','Bb\'','U2','D2','L2','R2','F2','B2','u2','d2','l2','r2','f2','b2','Uu2','Dd2','Ll2','Rr2','Ff2','Bb2'])
 
     def printCube(self):
@@ -45,7 +47,8 @@ class Cube:
 	print()
 
     def getFaces(self):
-        return self.faces
+        np.copyto(self.temp, self.faces)
+        return self.temp
 
     def setFaces(self,faces):
         np.copyto(self.faces, faces)
