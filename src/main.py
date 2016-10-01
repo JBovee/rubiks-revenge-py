@@ -39,6 +39,8 @@ def fitness1(faces):
     return sum(faceTotals)
 
 # def gp_move(faces,moveType): return testcube.fitness1(testcube.moveTypes(testcube.faces,moveType))
+# def gp_if(): 
+# def gp_loop4(faces): 
 def gp_U(faces): return moveTypes(faces,0)
 def gp_D(faces): return moveTypes(faces,1)
 def gp_L(faces): return moveTypes(faces,2)
