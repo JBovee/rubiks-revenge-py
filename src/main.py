@@ -1,11 +1,11 @@
 from Cube import Cube
 from move import *
+from collections import Counter
 import numpy as np
 import random as rand
-from pyevolve import Util
-from pyevolve import GTree
-from pyevolve import GSimpleGA
-from pyevolve import Consts
+import operator as op
+from functools import partial
+from deap import algorithms, creator, base, tools, gp
 import math
 
 '''
@@ -31,118 +31,171 @@ def printMoves():
     print(''.join(['{:5}'.format(str(num)) for num in xrange(36,54)]))
     print(''.join(['{:5}'.format(moves[num]) for num in xrange(36,54)]))
 
-err_accum = Util.ErrorAccumulator()
-
 def fitness1(faces):
     goalFaces = ['w','r','y','o','b','g']
     faceTotals = [sum([faces[x][y].tolist().count(goalFaces[x]) for y in range(0,4)]) for x in range(0,6)]
     return sum(faceTotals)
 
-# def gp_move(faces,moveType): return testcube.fitness1(testcube.moveTypes(testcube.faces,moveType))
-# def gp_if(): 
-# def gp_loop4(faces): 
-def gp_U(faces): return moveTypes(faces,0)
-def gp_D(faces): return moveTypes(faces,1)
-def gp_L(faces): return moveTypes(faces,2)
-def gp_R(faces): return moveTypes(faces,3)
-def gp_F(faces): return moveTypes(faces,4)
-def gp_B(faces): return moveTypes(faces,5)
-def gp_u(faces): return moveTypes(faces,6)
-def gp_d(faces): return moveTypes(faces,7)
-def gp_l(faces): return moveTypes(faces,8)
-def gp_r(faces): return moveTypes(faces,9)
-def gp_f(faces): return moveTypes(faces,10)
-def gp_b(faces): return moveTypes(faces,11)
-def gp_Uu(faces): return moveTypes(faces,12)
-def gp_Dd(faces): return moveTypes(faces,13)
-def gp_Ll(faces): return moveTypes(faces,14)
-def gp_Rr(faces): return moveTypes(faces,15)
-def gp_Ff(faces): return moveTypes(faces,16)
-def gp_Bb(faces): return moveTypes(faces,17)
-def gp_Ua(faces): return moveTypes(faces,18)
-def gp_Da(faces): return moveTypes(faces,19)
-def gp_La(faces): return moveTypes(faces,20)
-def gp_Ra(faces): return moveTypes(faces,21)
-def gp_Fa(faces): return moveTypes(faces,22)
-def gp_Ba(faces): return moveTypes(faces,23)
-def gp_ua(faces): return moveTypes(faces,24)
-def gp_da(faces): return moveTypes(faces,25)
-def gp_la(faces): return moveTypes(faces,26)
-def gp_ra(faces): return moveTypes(faces,27)
-def gp_fa(faces): return moveTypes(faces,28)
-def gp_ba(faces): return moveTypes(faces,29)
-def gp_Uua(faces): return moveTypes(faces,30)
-def gp_Dda(faces): return moveTypes(faces,31)
-def gp_Lla(faces): return moveTypes(faces,32)
-def gp_Rra(faces): return moveTypes(faces,33)
-def gp_Ffa(faces): return moveTypes(faces,34)
-def gp_Bba(faces): return moveTypes(faces,35)
-def gp_U2(faces): return moveTypes(faces,36)
-def gp_D2(faces): return moveTypes(faces,37)
-def gp_L2(faces): return moveTypes(faces,38)
-def gp_R2(faces): return moveTypes(faces,39)
-def gp_F2(faces): return moveTypes(faces,40)
-def gp_B2(faces): return moveTypes(faces,41)
-def gp_u2(faces): return moveTypes(faces,42)
-def gp_d2(faces): return moveTypes(faces,43)
-def gp_l2(faces): return moveTypes(faces,44)
-def gp_r2(faces): return moveTypes(faces,45)
-def gp_f2(faces): return moveTypes(faces,46)
-def gp_b2(faces): return moveTypes(faces,47)
-def gp_Uu2(faces): return moveTypes(faces,48)
-def gp_Dd2(faces): return moveTypes(faces,49)
-def gp_Ll2(faces): return moveTypes(faces,50)
-def gp_Rr2(faces): return moveTypes(faces,51)
-def gp_Ff2(faces): return moveTypes(faces,52)
-def gp_Bb2(faces): return moveTypes(faces,53)
+def fitness2(faces):
+    return float("{0:.2f}".format(np.average([Counter(x for face in faces[y].tolist() for x in face).most_common(1)[0][1] for y in range(0,6)])))
 
-def eval_func(chromosome):
-    global err_accum
-    err_accum.reset()
-    code_comp = chromosome.getCompiledCode()
+def fitness3(faces):
+    centerOptions = ['w','r','y','o','b','g']
+    centers = faces[:,1:3,1:3]
+    tempCent = np.full([6,4], '', dtype=np.str)
+    faceColors = np.full([6], '', dtype=np.str)
+    for i in range(0,6):
+        np.copyto(tempCent[i], np.hstack((centers[i][0],centers[i][1])))
+    tempCentL = tempCent.tolist()
+    dicts = [{'w': row.count('w'), 'r': row.count('r'), 'y': row.count('y'), 'o': row.count('o'), 'b': row.count('b'), 'g': row.count('g')} for row in tempCentL]
+    sorted_dicts = [sorted(el.items(), key=op.itemgetter(1), reverse=True) for el in dicts]
+    has_space = True
+    while has_space:
+        for i in range(0,6):
+            if sorted_dicts[i][0][1] == 3 or sorted_dicts[i][0][1] == 4:
+                faceColors[i] = sorted_dicts[i][0][0]
+        for i in range(0,6):
+            if sorted_dicts[i][0][1] == 2 and sorted_dicts[i][1][1] == 1:
+                rand_pos = rand.randint(0,3)
+                if sorted_dicts[i][rand_pos%3][0] not in faceColors:
+                    faceColors[i] = sorted_dicts[i][rand_pos%3][0]
+            elif sorted_dicts[i][0][1] == 2 and sorted_dicts[i][1][1] == 2:
+                rand_pos = rand.randint(0,1)
+                if sorted_dicts[i][rand_pos][0] not in faceColors:
+                    faceColors[i] = sorted_dicts[i][rand_pos][0]
+            elif sorted_dicts[i][0][1] == 1 and sorted_dicts[i][1][1] == 1:
+                rand_pos = rand.randint(0,3)
+                if sorted_dicts[i][rand_pos][0] not in faceColors:
+                    faceColors[i] = sorted_dicts[i][rand_pos][0]
+        has_space = '' in faceColors
+    faceTotals = [sum([faces[x][y].tolist().count(faceColors[x]) for y in range(0,4)]) for x in range(0,6)]
+    return sum(faceTotals)
 
-    evaluated   = eval(code_comp)
-    target      = cleanfaces
-    err_accum  += (fitness1(target), fitness1(evaluated))
+def progn(*args):
+    for arg in args:
+        arg()
 
-    return err_accum.getRMSE()
+def prog2(out1, out2):
+    return partial(progn, out1, out2)
 
-def main_run():
-    global faces
-    global cleanfaces
-    testcube = Cube()
-    cube2 = Cube()
-    cleancube = Cube()
-    cleanfaces = cleancube.getFaces()
+def loopn(n, arg):
+    for i in xrange(n):
+        arg()
 
-    testcube.move(3)
-    testcube.move(3)
-    cube2.setFaces(testcube.getFaces())
-    faces = testcube.getFaces()
+def loop2(arg):
+    return partial(loopn, 2, arg)
+
+'''
+def if_then_else(condition, out1, out2):
+    out1() if condition() else out2()
+
+def if_0_red_gt4(testcube, out1, out2):
+    return partial(if_then_else, sum([testcube.self.faces[0][y].tolist().count('r') for y in range(0,4)]) > 4, out1, out2)
+'''
+
+testcube = Cube()
+
+pset = gp.PrimitiveSet("MAIN", 0)
+pset.addPrimitive(prog2, 2)
+pset.addPrimitive(loop2, 1)
+pset.addTerminal(testcube.move_U)
+pset.addTerminal(testcube.move_D)
+pset.addTerminal(testcube.move_L)
+pset.addTerminal(testcube.move_R)
+pset.addTerminal(testcube.move_F)
+pset.addTerminal(testcube.move_B)
+pset.addTerminal(testcube.move_u)
+pset.addTerminal(testcube.move_d)
+pset.addTerminal(testcube.move_l)
+pset.addTerminal(testcube.move_r)
+pset.addTerminal(testcube.move_f)
+pset.addTerminal(testcube.move_b)
+pset.addTerminal(testcube.move_Uu)
+pset.addTerminal(testcube.move_Dd)
+pset.addTerminal(testcube.move_Ll)
+pset.addTerminal(testcube.move_Rr)
+pset.addTerminal(testcube.move_Ff)
+pset.addTerminal(testcube.move_Bb)
+pset.addTerminal(testcube.move_Ua)
+pset.addTerminal(testcube.move_Da)
+pset.addTerminal(testcube.move_La)
+pset.addTerminal(testcube.move_Ra)
+pset.addTerminal(testcube.move_Fa)
+pset.addTerminal(testcube.move_Ba)
+pset.addTerminal(testcube.move_ua)
+pset.addTerminal(testcube.move_da)
+pset.addTerminal(testcube.move_la)
+pset.addTerminal(testcube.move_ra)
+pset.addTerminal(testcube.move_fa)
+pset.addTerminal(testcube.move_ba)
+pset.addTerminal(testcube.move_Uua)
+pset.addTerminal(testcube.move_Dda)
+pset.addTerminal(testcube.move_Lla)
+pset.addTerminal(testcube.move_Rra)
+pset.addTerminal(testcube.move_Ffa)
+pset.addTerminal(testcube.move_Bba)
+pset.addTerminal(testcube.move_U2)
+pset.addTerminal(testcube.move_D2)
+pset.addTerminal(testcube.move_L2)
+pset.addTerminal(testcube.move_R2)
+pset.addTerminal(testcube.move_F2)
+pset.addTerminal(testcube.move_B2)
+pset.addTerminal(testcube.move_u2)
+pset.addTerminal(testcube.move_d2)
+pset.addTerminal(testcube.move_l2)
+pset.addTerminal(testcube.move_r2)
+pset.addTerminal(testcube.move_f2)
+pset.addTerminal(testcube.move_b2)
+pset.addTerminal(testcube.move_Uu2)
+pset.addTerminal(testcube.move_Dd2)
+pset.addTerminal(testcube.move_Ll2)
+pset.addTerminal(testcube.move_Rr2)
+pset.addTerminal(testcube.move_Ff2)
+pset.addTerminal(testcube.move_Bb2)
+
+creator.create("FitnessMax", base.Fitness, weights=(1.0,))
+creator.create("Individual", gp.PrimitiveTree, fitness=creator.FitnessMax)
+
+toolbox = base.Toolbox()
+
+toolbox.register("expr_init", gp.genFull, pset=pset, min_=1, max_=2)
+toolbox.register("individual", tools.initIterate, creator.Individual, toolbox.expr_init)
+toolbox.register("population", tools.initRepeat, list, toolbox.individual)
+
+def evalCube(individual):
+    moves = gp.compile(individual, pset)
+    testcube.run(moves)
+    return fitness3(testcube.getFaces()),
+
+toolbox.register("evaluate", evalCube)
+toolbox.register("select", tools.selTournament, tournsize=7)
+toolbox.register("mate", gp.cxOnePoint)
+toolbox.register("expr_mut", gp.genFull, min_=0, max_=2)
+toolbox.register("mutate", gp.mutUniform, expr=toolbox.expr_mut, pset=pset)
+
+def main():
+    testcube.scramble(10)
+    testcube.printCube()
+    testcube._store()
+
+    pop = toolbox.population(n=40)
+    hof=tools.HallOfFame(1)
+    stats = tools.Statistics(lambda ind: ind.fitness.values)
+    stats.register("avg", np.mean)
+    stats.register("std", np.std)
+    stats.register("min", np.min)
+    stats.register("max", np.max)
+
+    algorithms.eaSimple(pop, toolbox, 0.8, 0.1, 50, stats, halloffame=hof)
+
+    print
+    print(hof[0])
+    print(hof[0].fitness)
+    bestMoves = gp.compile(hof[0],pset)
+    testcube.run(bestMoves)
     testcube.printCube()
 
-    genome = GTree.GTreeGP()
-    genome.setParams(max_depth=8, method="ramped")
-    genome.evaluator.set(eval_func)
-
-    ga = GSimpleGA.GSimpleGA(genome)
-    ga.setParams(gp_terminals       = ['faces'],
-                 gp_function_prefix = "gp")
-
-    ga.setMinimax(Consts.minimaxType["minimize"])
-    ga.setGenerations(10)
-    ga.setCrossoverRate(1.0)
-    ga.setMutationRate(0.25)
-    ga.setPopulationSize(50)
-
-    ga(freq_stats=10)
-    best = ga.bestIndividual()
-    print best
-    print best
-
-    testcube.printCube()
-    cleancube.printCube()
-    cube2.printCube()
+    return pop, stats, hof
 
 if __name__ == "__main__":
-   main_run()
+   main()
