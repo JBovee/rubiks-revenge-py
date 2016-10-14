@@ -165,20 +165,21 @@ toolbox.register("population", tools.initRepeat, list, toolbox.individual)
 def evalCube(individual):
     moves = gp.compile(individual, pset)
     testcube.run(moves)
-    return fitness3(testcube.getFaces()),
+    return fitness2(testcube.getFaces()),
 
 toolbox.register("evaluate", evalCube)
-toolbox.register("select", tools.selTournament, tournsize=7)
+#toolbox.register("select", tools.selTournament, fitness_size=7)
+toolbox.register("select", tools.selDoubleTournament, fitness_size=7, parsimony_size=1.4, fitness_first=False)
 toolbox.register("mate", gp.cxOnePoint)
 toolbox.register("expr_mut", gp.genFull, min_=0, max_=2)
 toolbox.register("mutate", gp.mutUniform, expr=toolbox.expr_mut, pset=pset)
 
 def main():
-    testcube.scramble(10)
+    testcube.scramble(5)
     testcube.printCube()
     testcube._store()
 
-    pop = toolbox.population(n=40)
+    pop = toolbox.population(n=80)
     hof=tools.HallOfFame(1)
     stats = tools.Statistics(lambda ind: ind.fitness.values)
     stats.register("avg", np.mean)
@@ -186,7 +187,7 @@ def main():
     stats.register("min", np.min)
     stats.register("max", np.max)
 
-    algorithms.eaSimple(pop, toolbox, 0.8, 0.1, 50, stats, halloffame=hof)
+    algorithms.eaSimple(pop, toolbox, 0.8, 0.01, 30, stats, halloffame=hof)
 
     print
     print(hof[0])
