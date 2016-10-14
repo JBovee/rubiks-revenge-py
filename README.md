@@ -11,19 +11,19 @@ Is currently written to be used with Python 2.7.
 Requires installation of DEAP (see github.com/DEAP/deap), and NumPy (see http://scipy.org/install.html).
 
 DEAP
-'''sh
+```sh
 pip install deap
-'''
+```
 
 NumPy
-'''sh
+```sh
 sudo apt-get install python-numpy
-'''
+```
 
 Running
 -------
 
 Just run src/main.py with python
-'''sh
+```sh
 python src/main.py
-'''
+```
