@@ -1,6 +1,7 @@
 from Cube import Cube
 from move import *
 from collections import Counter
+import sys
 import numpy as np
 import random as rand
 import operator as op
@@ -165,7 +166,7 @@ toolbox.register("population", tools.initRepeat, list, toolbox.individual)
 def evalCube(individual):
     moves = gp.compile(individual, pset)
     testcube.run(moves)
-    return fitness2(testcube.getFaces()),
+    return fitness1(testcube.getFaces()),
 
 toolbox.register("evaluate", evalCube)
 #toolbox.register("select", tools.selTournament, fitness_size=7)
@@ -175,7 +176,22 @@ toolbox.register("expr_mut", gp.genFull, min_=0, max_=2)
 toolbox.register("mutate", gp.mutUniform, expr=toolbox.expr_mut, pset=pset)
 
 def main():
-    testcube.scramble(5)
+    #testcube.scramble(15)
+    testcube.move_R()
+    testcube.move_U2()
+    testcube.move_Ra()
+    testcube.move_D()
+    testcube.move_b2()
+    testcube.move_Ra()
+    testcube.move_D()
+    testcube.move_R2()
+    testcube.move_b()
+    testcube.move_u()
+    testcube.move_Bb2()
+    testcube.move_U2()
+    testcube.move_Ll2()
+    testcube.move_d2()
+    testcube.move_u2()
     testcube.printCube()
     testcube._store()
 
@@ -187,7 +203,13 @@ def main():
     stats.register("min", np.min)
     stats.register("max", np.max)
 
-    algorithms.eaSimple(pop, toolbox, 0.8, 0.01, 30, stats, halloffame=hof)
+    gen = int(sys.argv[1])
+    cxpb = float(sys.argv[2])
+    mutpb = float(sys.argv[3])
+
+    print("CXPB = "+str(cxpb)+"  MUTPB = "+str(mutpb)+"  GEN = "+str(gen))
+
+    algorithms.eaSimple(pop, toolbox, cxpb, mutpb, gen, stats, halloffame=hof)
 
     print
     print(hof[0])
