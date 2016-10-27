@@ -7,8 +7,6 @@ from functools import partial
 def if_then_else(condition, out1, out2):
     out1() if condition else out2()
 
-facesum = 8
-
 class Cube(object):
 
     def __init__(self):
@@ -40,6 +38,10 @@ class Cube(object):
         self.storedfaces = np.full([6,4,4], '', dtype=np.str)
 
         self.temp = np.full([6,4,4], '', dtype=np.str)
+
+        self.facesum = 8
+
+        self.fitFunc = "f1"
 
         self.moves = np.array(['U','D','L','R','F','B','u','d','l','r','f','b','Uu','Dd','Ll','Rr','Ff','Bb','Ua','Da','La','Ra','Fa','Ba','ua','da','la','ra','fa','ba','Uua','Dda','Lla','Rra','Ffa','Bba','U2','D2','L2','R2','F2','B2','u2','d2','l2','r2','f2','b2','Uu2','Dd2','Ll2','Rr2','Ff2','Bb2'])
 
@@ -103,6 +105,17 @@ class Cube(object):
     def _restore(self):
         np.copyto(self.faces,self.storedfaces)
 
+    def setFitFunc(self, fit):
+        self.fitFunc = fit
+
+    def fitness(self):
+        if self.fitFunc == "f1":
+            return self.fitness1(self.faces)
+        if self.fitFunc == "f2":
+            return self.fitness2(self.faces)
+        if self.fitFunc == "f3":
+            return self.fitness3(self.faces)
+
     def printCube(self):
         print('\n'.join([''.join(['{:3}'.format(item) for item in row]) for row in self.faces[4]]))
 	print('-  -  -  -')
@@ -131,8 +144,18 @@ class Cube(object):
         self._restore()
         moves()
 
+    def if_better(self, move1, move2):
+        np.copyto(self.temp, self.faces)
+        move1()
+        fit1 = self.fitness()
+        np.copyto(self.faces, self.temp)
+        move2()
+        fit2 = self.fitness()
+        np.copyto(self.faces, self.temp)
+        return partial(if_then_else, (fit1 > fit2), move1, move2)
+
     def sum_w(self,face):
-        return sum([self.faces[face][y].tolist().count('w') for y in range(0,4)]) > facesum
+        return sum([self.faces[face][y].tolist().count('w') for y in range(0,4)]) > self.facesum
 
     def if_w_0(self, out1, out2):
         return partial(if_then_else, self.sum_w(0), out1, out2)
@@ -153,7 +176,7 @@ class Cube(object):
         return partial(if_then_else, self.sum_w(5), out1, out2)
 
     def sum_r(self,face):
-        return sum([self.faces[face][y].tolist().count('r') for y in range(0,4)]) > facesum
+        return sum([self.faces[face][y].tolist().count('r') for y in range(0,4)]) > self.facesum
 
     def if_r_0(self, out1, out2):
         return partial(if_then_else, self.sum_r(0), out1, out2)
@@ -174,7 +197,7 @@ class Cube(object):
         return partial(if_then_else, self.sum_r(5), out1, out2)
 
     def sum_y(self,face):
-        return sum([self.faces[face][y].tolist().count('y') for y in range(0,4)]) > facesum
+        return sum([self.faces[face][y].tolist().count('y') for y in range(0,4)]) > self.facesum
 
     def if_y_0(self, out1, out2):
         return partial(if_then_else, self.sum_y(0), out1, out2)
@@ -195,7 +218,7 @@ class Cube(object):
         return partial(if_then_else, self.sum_y(5), out1, out2)
 
     def sum_o(self,face):
-        return sum([self.faces[face][y].tolist().count('o') for y in range(0,4)]) > facesum
+        return sum([self.faces[face][y].tolist().count('o') for y in range(0,4)]) > self.facesum
 
     def if_o_0(self, out1, out2):
         return partial(if_then_else, self.sum_o(0), out1, out2)
@@ -216,7 +239,7 @@ class Cube(object):
         return partial(if_then_else, self.sum_o(5), out1, out2)
 
     def sum_b(self,face):
-        return sum([self.faces[face][y].tolist().count('b') for y in range(0,4)]) > facesum
+        return sum([self.faces[face][y].tolist().count('b') for y in range(0,4)]) > self.facesum
 
     def if_b_0(self, out1, out2):
         return partial(if_then_else, self.sum_b(0), out1, out2)
@@ -237,7 +260,7 @@ class Cube(object):
         return partial(if_then_else, self.sum_b(5), out1, out2)
 
     def sum_g(self,face):
-        return sum([self.faces[face][y].tolist().count('g') for y in range(0,4)]) > facesum
+        return sum([self.faces[face][y].tolist().count('g') for y in range(0,4)]) > self.facesum
 
     def if_g_0(self, out1, out2):
         return partial(if_then_else, self.sum_g(0), out1, out2)
@@ -825,9 +848,12 @@ class Cube(object):
         faceTotals = [sum([faces[x][y].tolist().count(goalFaces[x]) for y in range(0,4)]) for x in range(0,6)]
         return sum(faceTotals)
 
-    def fitness2(self):
+    def fitness2(self,faces):
+        return float("{0:.2f}".format(np.average([Counter(x for face in faces[y].tolist() for x in face).most_common(1)[0][1] for y in range(0,6)])))
+
+    def fitness3(self,faces):
         centerOptions = ['w','r','y','o','b','g']
-        centers = self.faces[:,1:3,1:3]
+        centers = faces[:,1:3,1:3]
         tempCent = np.full([6,4], '', dtype=np.str)
         faceColors = np.full([6], '', dtype=np.str)
         for i in range(0,6):
@@ -854,5 +880,5 @@ class Cube(object):
                     if sorted_dicts[i][rand_pos][0] not in faceColors:
                         faceColors[i] = sorted_dicts[i][rand_pos][0]
             has_space = '' in faceColors
-        faceTotals = [sum([self.faces[x][y].tolist().count(faceColors[x]) for y in range(0,4)]) for x in range(0,6)]
+        faceTotals = [sum([faces[x][y].tolist().count(faceColors[x]) for y in range(0,4)]) for x in range(0,6)]
         return sum(faceTotals)

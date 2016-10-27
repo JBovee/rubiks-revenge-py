@@ -105,6 +105,7 @@ def loop6(arg):
 #    return partial(if_then_else, sum([testcube.self.faces[0][y].tolist().count('r') for y in range(0,4)]) > 4, out1, out2)
 
 testcube = Cube()
+testcube.setFitFunc("f1")
 
 pset = gp.PrimitiveSet("MAIN", 0)
 pset.addPrimitive(prog2, 2)
@@ -113,6 +114,7 @@ pset.addPrimitive(loop3, 1)
 pset.addPrimitive(loop4, 1)
 pset.addPrimitive(loop5, 1)
 pset.addPrimitive(loop6, 1)
+pset.addPrimitive(testcube.if_better, 2)
 pset.addPrimitive(testcube.if_w_0, 2)
 pset.addPrimitive(testcube.if_w_1, 2)
 pset.addPrimitive(testcube.if_w_2, 2)
@@ -216,12 +218,7 @@ toolbox.register("population", tools.initRepeat, list, toolbox.individual)
 def evalCube(individual):
     moves = gp.compile(individual, pset)
     testcube.run(moves)
-    if sys.argv[4] == "f1":
-        return fitness1(testcube.getFaces()),
-    if sys.argv[4] == "f2":
-        return fitness2(testcube.getFaces()),
-    if sys.argv[4] == "f3":
-        return fitness3(testcube.getFaces()),
+    return testcube.fitness(),
 
 toolbox.register("evaluate", evalCube)
 #toolbox.register("select", tools.selTournament, tournsize=7)
