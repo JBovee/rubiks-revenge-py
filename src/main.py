@@ -72,6 +72,14 @@ def fitness3(faces):
     faceTotals = [sum([faces[x][y].tolist().count(faceColors[x]) for y in range(0,4)]) for x in range(0,6)]
     return sum(faceTotals)
 
+def fitness4(faces,moveCount):
+    return float("{0:.2f}".format(np.average([Counter(x for face in faces[y].tolist() for x in face).most_common(1)[0][1] for y in range(0,6)]) - np.sqrt(moveCount)))
+
+def fitness5(faces,moveCount):
+    goalFaces = ['w','r','y','o','b','g']
+    faceTotals = [sum([faces[x][y].tolist().count(goalFaces[x]) for y in range(0,4)]) for x in range(0,6)]
+    return sum(faceTotals)-moveCount
+
 def progn(*args):
     for arg in args:
         arg()

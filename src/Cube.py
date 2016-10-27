@@ -36,6 +36,8 @@ class Cube(object):
                                 ['g','g','g','g'],
                                 ['g','g','g','g']]])
 
+        self.moveCount = 0
+
         self.storedfaces = np.full([6,4,4], '', dtype=np.str)
 
         self.temp = np.full([6,4,4], '', dtype=np.str)
@@ -104,6 +106,7 @@ class Cube(object):
         np.copyto(self.storedfaces, self.faces)
 
     def _restore(self):
+        self.moveCount = 0
         np.copyto(self.faces,self.storedfaces)
 
     def setFitFunc(self, fit):
@@ -116,6 +119,10 @@ class Cube(object):
             return self.fitness2(self.faces)
         if self.fitFunc == "f3":
             return self.fitness3(self.faces)
+        if self.fitFunc == "f4":
+            return self.fitness4(self.faces)
+        if self.fitFunc == "f5":
+            return self.fitness5(self.faces)
 
     def printCube(self):
         print('\n'.join([''.join(['{:3}'.format(item) for item in row]) for row in self.faces[4]]))
@@ -282,18 +289,21 @@ class Cube(object):
         return partial(if_then_else, self.sum_g(5), out1, out2)
 
     def move_U(self):
+        self.moveCount += 1
         tempFaces = self.faces
         tempFaces = self.xRegTurn(tempFaces,0)
         tempFaces = self.rotateFace(tempFaces,4,True)
         self.faces = tempFaces
 
     def move_D(self):
+        self.moveCount += 1
         tempFaces = self.faces
         tempFaces = self.xAntiTurn(tempFaces,3)
         tempFaces = self.rotateFace(tempFaces,5,True)
         self.faces = tempFaces
 
     def move_L(self):
+        self.moveCount += 1
         tempFaces = self.faces
         tempFaces = self.XtoY(tempFaces)
         tempFaces = self.xRegTurn(tempFaces,0)
@@ -302,6 +312,7 @@ class Cube(object):
         self.faces = tempFaces
 
     def move_R(self):
+        self.moveCount += 1
         tempFaces = self.faces
         tempFaces = self.XtoY(tempFaces)
         tempFaces = self.xAntiTurn(tempFaces,3)
@@ -310,6 +321,7 @@ class Cube(object):
         self.faces = tempFaces
 
     def move_F(self):
+        self.moveCount += 1
         tempFaces = self.faces
         tempFaces = self.XtoZ(tempFaces)
         tempFaces = self.xRegTurn(tempFaces,0)
@@ -318,6 +330,7 @@ class Cube(object):
         self.faces = tempFaces
 
     def move_B(self):
+        self.moveCount += 1
         tempFaces = self.faces
         tempFaces = self.XtoZ(tempFaces)
         tempFaces = self.xAntiTurn(tempFaces,3)
@@ -326,16 +339,19 @@ class Cube(object):
         self.faces = tempFaces
 
     def move_u(self):
+        self.moveCount += 1
         tempFaces = self.faces
         tempFaces = self.xRegTurn(tempFaces,1)
         self.faces = tempFaces
 
     def move_d(self):
+        self.moveCount += 1
         tempFaces = self.faces
         tempFaces = self.xAntiTurn(tempFaces,2)
         self.faces = tempFaces
 
     def move_l(self):
+        self.moveCount += 1
         tempFaces = self.faces
         tempFaces = self.XtoY(tempFaces)
         tempFaces = self.xRegTurn(tempFaces,1)
@@ -343,6 +359,7 @@ class Cube(object):
         self.faces = tempFaces
 
     def move_r(self):
+        self.moveCount += 1
         tempFaces = self.faces
         tempFaces = self.XtoY(tempFaces)
         tempFaces = self.xAntiTurn(tempFaces,2)
@@ -350,6 +367,7 @@ class Cube(object):
         self.faces = tempFaces
 
     def move_f(self):
+        self.moveCount += 1
         tempFaces = self.faces
         tempFaces = self.XtoZ(tempFaces)
         tempFaces = self.xRegTurn(tempFaces,1)
@@ -357,6 +375,7 @@ class Cube(object):
         self.faces = tempFaces
 
     def move_b(self):
+        self.moveCount += 1
         tempFaces = self.faces
         tempFaces = self.XtoZ(tempFaces)
         tempFaces = self.xAntiTurn(tempFaces,2)
@@ -364,6 +383,7 @@ class Cube(object):
         self.faces = tempFaces
 
     def move_Uu(self):
+        self.moveCount += 1
         tempFaces = self.faces
         tempFaces = self.xRegTurn(tempFaces,0)
         tempFaces = self.xRegTurn(tempFaces,1)
@@ -371,6 +391,7 @@ class Cube(object):
         self.faces = tempFaces
 
     def move_Dd(self):
+        self.moveCount += 1
         tempFaces = self.faces
         tempFaces = self.xAntiTurn(tempFaces,2)
         tempFaces = self.xAntiTurn(tempFaces,3)
@@ -378,6 +399,7 @@ class Cube(object):
         self.faces = tempFaces
 
     def move_Ll(self):
+        self.moveCount += 1
         tempFaces = self.faces
         tempFaces = self.XtoY(tempFaces)
         tempFaces = self.xRegTurn(tempFaces,0)
@@ -387,6 +409,7 @@ class Cube(object):
         self.faces = tempFaces
 
     def move_Rr(self):
+        self.moveCount += 1
         tempFaces = self.faces
         tempFaces = self.XtoY(tempFaces)
         tempFaces = self.xAntiTurn(tempFaces,2)
@@ -396,6 +419,7 @@ class Cube(object):
         self.faces = tempFaces
 
     def move_Ff(self):
+        self.moveCount += 1
         tempFaces = self.faces
         tempFaces = self.XtoZ(tempFaces)
         tempFaces = self.xRegTurn(tempFaces,0)
@@ -405,6 +429,7 @@ class Cube(object):
         self.faces = tempFaces
 
     def move_Bb(self):
+        self.moveCount += 1
         tempFaces = self.faces
         tempFaces = self.XtoZ(tempFaces)
         tempFaces = self.xAntiTurn(tempFaces,2)
@@ -414,18 +439,21 @@ class Cube(object):
         self.faces = tempFaces
 
     def move_Ua(self):
+        self.moveCount += 1
         tempFaces = self.faces
         tempFaces = self.xAntiTurn(tempFaces,0)
         tempFaces = self.rotateFace(tempFaces,4,False)
         self.faces = tempFaces
 
     def move_Da(self):
+        self.moveCount += 1
         tempFaces = self.faces
         tempFaces = self.xRegTurn(tempFaces,3)
         tempFaces = self.rotateFace(tempFaces,5,False)
         self.faces = tempFaces
 
     def move_La(self):
+        self.moveCount += 1
         tempFaces = self.faces
         tempFaces = self.XtoY(tempFaces)
         tempFaces = self.xAntiTurn(tempFaces,0)
@@ -434,6 +462,7 @@ class Cube(object):
         self.faces = tempFaces
 
     def move_Ra(self):
+        self.moveCount += 1
         tempFaces = self.faces
         tempFaces = self.XtoY(tempFaces)
         tempFaces = self.xRegTurn(tempFaces,3)
@@ -442,6 +471,7 @@ class Cube(object):
         self.faces = tempFaces
 
     def move_Fa(self):
+        self.moveCount += 1
         tempFaces = self.faces
         tempFaces = self.XtoZ(tempFaces)
         tempFaces = self.xAntiTurn(tempFaces,0)
@@ -450,6 +480,7 @@ class Cube(object):
         self.faces = tempFaces
 
     def move_Ba(self):
+        self.moveCount += 1
         tempFaces = self.faces
         tempFaces = self.XtoZ(tempFaces)
         tempFaces = self.xRegTurn(tempFaces,3)
@@ -458,16 +489,19 @@ class Cube(object):
         self.faces = tempFaces
 
     def move_ua(self):
+        self.moveCount += 1
         tempFaces = self.faces
         tempFaces = self.xAntiTurn(tempFaces,1)
         self.faces = tempFaces
 
     def move_da(self):
+        self.moveCount += 1
         tempFaces = self.faces
         tempFaces = self.xRegTurn(tempFaces,2)
         self.faces = tempFaces
 
     def move_la(self):
+        self.moveCount += 1
         tempFaces = self.faces
         tempFaces = self.XtoY(tempFaces)
         tempFaces = self.xAntiTurn(tempFaces,1)
@@ -475,6 +509,7 @@ class Cube(object):
         self.faces = tempFaces
 
     def move_ra(self):
+        self.moveCount += 1
         tempFaces = self.faces
         tempFaces = self.XtoY(tempFaces)
         tempFaces = self.xRegTurn(tempFaces,2)
@@ -482,6 +517,7 @@ class Cube(object):
         self.faces = tempFaces
 
     def move_fa(self):
+        self.moveCount += 1
         tempFaces = self.faces
         tempFaces = self.XtoZ(tempFaces)
         tempFaces = self.xAntiTurn(tempFaces,1)
@@ -489,6 +525,7 @@ class Cube(object):
         self.faces = tempFaces
 
     def move_ba(self):
+        self.moveCount += 1
         tempFaces = self.faces
         tempFaces = self.XtoZ(tempFaces)
         tempFaces = self.xRegTurn(tempFaces,2)
@@ -496,6 +533,7 @@ class Cube(object):
         self.faces = tempFaces
 
     def move_Uua(self):
+        self.moveCount += 1
         tempFaces = self.faces
         tempFaces = self.xAntiTurn(tempFaces,0)
         tempFaces = self.xAntiTurn(tempFaces,1)
@@ -503,6 +541,7 @@ class Cube(object):
         self.faces = tempFaces
 
     def move_Dda(self):
+        self.moveCount += 1
         tempFaces = self.faces
         tempFaces = self.xRegTurn(tempFaces,2)
         tempFaces = self.xRegTurn(tempFaces,3)
@@ -510,6 +549,7 @@ class Cube(object):
         self.faces = tempFaces
 
     def move_Lla(self):
+        self.moveCount += 1
         tempFaces = self.faces
         tempFaces = self.XtoY(tempFaces)
         tempFaces = self.xAntiTurn(tempFaces,0)
@@ -519,6 +559,7 @@ class Cube(object):
         self.faces = tempFaces
 
     def move_Rra(self):
+        self.moveCount += 1
         tempFaces = self.faces
         tempFaces = self.XtoY(tempFaces)
         tempFaces = self.xRegTurn(tempFaces,2)
@@ -528,6 +569,7 @@ class Cube(object):
         self.faces = tempFaces
 
     def move_Ffa(self):
+        self.moveCount += 1
         tempFaces = self.faces
         tempFaces = self.XtoZ(tempFaces)
         tempFaces = self.xAntiTurn(tempFaces,0)
@@ -537,6 +579,7 @@ class Cube(object):
         self.faces = tempFaces
 
     def move_Bba(self):
+        self.moveCount += 1
         tempFaces = self.faces
         tempFaces = self.XtoZ(tempFaces)
         tempFaces = self.xRegTurn(tempFaces,2)
@@ -546,6 +589,7 @@ class Cube(object):
         self.faces = tempFaces
 
     def move_U2(self):
+        self.moveCount += 1
         tempFaces = self.faces
         tempFaces = self.xRegTurn(tempFaces,0)
         tempFaces = self.xRegTurn(tempFaces,0)
@@ -554,6 +598,7 @@ class Cube(object):
         self.faces = tempFaces
 
     def move_D2(self):
+        self.moveCount += 1
         tempFaces = self.faces
         tempFaces = self.xAntiTurn(tempFaces,3)
         tempFaces = self.xAntiTurn(tempFaces,3)
@@ -562,6 +607,7 @@ class Cube(object):
         self.faces = tempFaces
 
     def move_L2(self):
+        self.moveCount += 1
         tempFaces = self.faces
         tempFaces = self.XtoY(tempFaces)
         tempFaces = self.xRegTurn(tempFaces,0)
@@ -572,6 +618,7 @@ class Cube(object):
         self.faces = tempFaces
 
     def move_R2(self):
+        self.moveCount += 1
         tempFaces = self.faces
         tempFaces = self.XtoY(tempFaces)
         tempFaces = self.xAntiTurn(tempFaces,3)
@@ -582,6 +629,7 @@ class Cube(object):
         self.faces = tempFaces
 
     def move_F2(self):
+        self.moveCount += 1
         tempFaces = self.faces
         tempFaces = self.XtoZ(tempFaces)
         tempFaces = self.xRegTurn(tempFaces,0)
@@ -592,6 +640,7 @@ class Cube(object):
         self.faces = tempFaces
 
     def move_B2(self):
+        self.moveCount += 1
         tempFaces = self.faces
         tempFaces = self.XtoZ(tempFaces)
         tempFaces = self.xAntiTurn(tempFaces,3)
@@ -602,18 +651,21 @@ class Cube(object):
         self.faces = tempFaces
 
     def move_u2(self):
+        self.moveCount += 1
         tempFaces = self.faces
         tempFaces = self.xRegTurn(tempFaces,1)
         tempFaces = self.xRegTurn(tempFaces,1)
         self.faces = tempFaces
 
     def move_d2(self):
+        self.moveCount += 1
         tempFaces = self.faces
         tempFaces = self.xAntiTurn(tempFaces,2)
         tempFaces = self.xAntiTurn(tempFaces,2)
         self.faces = tempFaces
 
     def move_l2(self):
+        self.moveCount += 1
         tempFaces = self.faces
         tempFaces = self.XtoY(tempFaces)
         tempFaces = self.xRegTurn(tempFaces,1)
@@ -622,6 +674,7 @@ class Cube(object):
         self.faces = tempFaces
 
     def move_r2(self):
+        self.moveCount += 1
         tempFaces = self.faces
         tempFaces = self.XtoY(tempFaces)
         tempFaces = self.xAntiTurn(tempFaces,2)
@@ -630,6 +683,7 @@ class Cube(object):
         self.faces = tempFaces
 
     def move_f2(self):
+        self.moveCount += 1
         tempFaces = self.faces
         tempFaces = self.XtoZ(tempFaces)
         tempFaces = self.xRegTurn(tempFaces,1)
@@ -638,6 +692,7 @@ class Cube(object):
         self.faces = tempFaces
 
     def move_b2(self):
+        self.moveCount += 1
         tempFaces = self.faces
         tempFaces = self.XtoZ(tempFaces)
         tempFaces = self.xAntiTurn(tempFaces,2)
@@ -646,6 +701,7 @@ class Cube(object):
         self.faces = tempFaces
 
     def move_Uu2(self):
+        self.moveCount += 1
         tempFaces = self.faces
         tempFaces = self.xRegTurn(tempFaces,0)
         tempFaces = self.xRegTurn(tempFaces,1)
@@ -656,6 +712,7 @@ class Cube(object):
         self.faces = tempFaces
 
     def move_Dd2(self):
+        self.moveCount += 1
         tempFaces = self.faces
         tempFaces = self.xAntiTurn(tempFaces,2)
         tempFaces = self.xAntiTurn(tempFaces,3)
@@ -666,6 +723,7 @@ class Cube(object):
         self.faces = tempFaces
 
     def move_Ll2(self):
+        self.moveCount += 1
         tempFaces = self.faces
         tempFaces = self.XtoY(tempFaces)
         tempFaces = self.xRegTurn(tempFaces,0)
@@ -678,6 +736,7 @@ class Cube(object):
         self.faces = tempFaces
 
     def move_Rr2(self):
+        self.moveCount += 1
         tempFaces = self.faces
         tempFaces = self.XtoY(tempFaces)
         tempFaces = self.xAntiTurn(tempFaces,2)
@@ -690,6 +749,7 @@ class Cube(object):
         self.faces = tempFaces
 
     def move_Ff2(self):
+        self.moveCount += 1
         tempFaces = self.faces
         tempFaces = self.XtoZ(tempFaces)
         tempFaces = self.xRegTurn(tempFaces,0)
@@ -702,6 +762,7 @@ class Cube(object):
         self.faces = tempFaces
 
     def move_Bb2(self):
+        self.moveCount += 1
         tempFaces = self.faces
         tempFaces = self.XtoZ(tempFaces)
         tempFaces = self.xAntiTurn(tempFaces,2)
@@ -883,3 +944,11 @@ class Cube(object):
             has_space = '' in faceColors
         faceTotals = [sum([faces[x][y].tolist().count(faceColors[x]) for y in range(0,4)]) for x in range(0,6)]
         return sum(faceTotals)
+
+    def fitness4(self,faces):
+        return float("{0:.2f}".format(np.average([Counter(x for face in faces[y].tolist() for x in face).most_common(1)[0][1] for y in range(0,6)]) - np.sqrt(self.moveCount)))
+
+    def fitness5(self,faces):
+        goalFaces = ['w','r','y','o','b','g']
+        faceTotals = [sum([faces[x][y].tolist().count(goalFaces[x]) for y in range(0,4)]) for x in range(0,6)]
+        return sum(faceTotals)-self.moveCount
