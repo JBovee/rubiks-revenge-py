@@ -105,7 +105,7 @@ def loop6(arg):
 #    return partial(if_then_else, sum([testcube.self.faces[0][y].tolist().count('r') for y in range(0,4)]) > 4, out1, out2)
 
 testcube = Cube()
-testcube.setFitFunc("f1")
+testcube.setFitFunc(sys.argv[4])
 
 pset = gp.PrimitiveSet("MAIN", 0)
 pset.addPrimitive(prog2, 2)

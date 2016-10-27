@@ -3,6 +3,7 @@ import numpy as np
 import random as rand
 import operator as op
 from functools import partial
+from collections import Counter
 
 def if_then_else(condition, out1, out2):
     out1() if condition else out2()
