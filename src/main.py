@@ -86,19 +86,53 @@ def loopn(n, arg):
 def loop2(arg):
     return partial(loopn, 2, arg)
 
-'''
-def if_then_else(condition, out1, out2):
-    out1() if condition() else out2()
-
-def if_0_red_gt4(testcube, out1, out2):
-    return partial(if_then_else, sum([testcube.self.faces[0][y].tolist().count('r') for y in range(0,4)]) > 4, out1, out2)
-'''
+#def if_then_else(condition, out1, out2):
+#    out1() if condition() else out2()
+#
+#def if_0_red_gt4(testcube, out1, out2):
+#    return partial(if_then_else, sum([testcube.self.faces[0][y].tolist().count('r') for y in range(0,4)]) > 4, out1, out2)
 
 testcube = Cube()
 
 pset = gp.PrimitiveSet("MAIN", 0)
 pset.addPrimitive(prog2, 2)
 pset.addPrimitive(loop2, 1)
+pset.addPrimitive(testcube.if_w_0, 2)
+pset.addPrimitive(testcube.if_w_1, 2)
+pset.addPrimitive(testcube.if_w_2, 2)
+pset.addPrimitive(testcube.if_w_3, 2)
+pset.addPrimitive(testcube.if_w_4, 2)
+pset.addPrimitive(testcube.if_w_5, 2)
+pset.addPrimitive(testcube.if_r_0, 2)
+pset.addPrimitive(testcube.if_r_1, 2)
+pset.addPrimitive(testcube.if_r_2, 2)
+pset.addPrimitive(testcube.if_r_3, 2)
+pset.addPrimitive(testcube.if_r_4, 2)
+pset.addPrimitive(testcube.if_r_5, 2)
+pset.addPrimitive(testcube.if_o_0, 2)
+pset.addPrimitive(testcube.if_o_1, 2)
+pset.addPrimitive(testcube.if_o_2, 2)
+pset.addPrimitive(testcube.if_o_3, 2)
+pset.addPrimitive(testcube.if_o_4, 2)
+pset.addPrimitive(testcube.if_o_5, 2)
+pset.addPrimitive(testcube.if_y_0, 2)
+pset.addPrimitive(testcube.if_y_1, 2)
+pset.addPrimitive(testcube.if_y_2, 2)
+pset.addPrimitive(testcube.if_y_3, 2)
+pset.addPrimitive(testcube.if_y_4, 2)
+pset.addPrimitive(testcube.if_y_5, 2)
+pset.addPrimitive(testcube.if_b_0, 2)
+pset.addPrimitive(testcube.if_b_1, 2)
+pset.addPrimitive(testcube.if_b_2, 2)
+pset.addPrimitive(testcube.if_b_3, 2)
+pset.addPrimitive(testcube.if_b_4, 2)
+pset.addPrimitive(testcube.if_b_5, 2)
+pset.addPrimitive(testcube.if_g_0, 2)
+pset.addPrimitive(testcube.if_g_1, 2)
+pset.addPrimitive(testcube.if_g_2, 2)
+pset.addPrimitive(testcube.if_g_3, 2)
+pset.addPrimitive(testcube.if_g_4, 2)
+pset.addPrimitive(testcube.if_g_5, 2)
 pset.addTerminal(testcube.move_U)
 pset.addTerminal(testcube.move_D)
 pset.addTerminal(testcube.move_L)
@@ -166,11 +200,16 @@ toolbox.register("population", tools.initRepeat, list, toolbox.individual)
 def evalCube(individual):
     moves = gp.compile(individual, pset)
     testcube.run(moves)
-    return fitness1(testcube.getFaces()),
+    if sys.argv[4] == "f1":
+        return fitness1(testcube.getFaces()),
+    if sys.argv[4] == "f2":
+        return fitness2(testcube.getFaces()),
+    if sys.argv[4] == "f3":
+        return fitness3(testcube.getFaces()),
 
 toolbox.register("evaluate", evalCube)
-toolbox.register("select", tools.selTournament, tournsize=7)
-#toolbox.register("select", tools.selDoubleTournament, fitness_size=7, parsimony_size=1.4, fitness_first=False)
+#toolbox.register("select", tools.selTournament, tournsize=7)
+toolbox.register("select", tools.selDoubleTournament, fitness_size=7, parsimony_size=1.4, fitness_first=False)
 toolbox.register("mate", gp.cxOnePoint)
 toolbox.register("expr_mut", gp.genFull, min_=0, max_=2)
 toolbox.register("mutate", gp.mutUniform, expr=toolbox.expr_mut, pset=pset)
@@ -192,7 +231,8 @@ def main():
     testcube.move_Ll2()
     testcube.move_d2()
     testcube.move_u2()
-    testcube.printCube()
+    #print(fitness1(testcube.getFaces()))
+    #testcube.printCube()
     testcube._store()
 
     pop = toolbox.population(n=80)
@@ -209,14 +249,14 @@ def main():
 
     print("CXPB = "+str(cxpb)+"  MUTPB = "+str(mutpb)+"  GEN = "+str(gen))
 
-    algorithms.eaSimple(pop, toolbox, cxpb, mutpb, gen, stats, halloffame=hof)
+    algorithms.eaSimple(pop, toolbox, cxpb, mutpb, gen, stats, halloffame=hof, verbose=False)
 
-    print
     print(hof[0])
     print(hof[0].fitness)
     bestMoves = gp.compile(hof[0],pset)
     testcube.run(bestMoves)
-    testcube.printCube()
+    #testcube.printCube()
+    print
 
     return pop, stats, hof
 

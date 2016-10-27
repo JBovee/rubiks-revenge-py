@@ -2,8 +2,14 @@ from __future__ import print_function
 import numpy as np
 import random as rand
 import operator as op
+from functools import partial
 
-class Cube:
+def if_then_else(condition, out1, out2):
+    out1() if condition else out2()
+
+facesum = 8
+
+class Cube(object):
 
     def __init__(self):
         self.faces = np.array([[['w','w','w','w'],
@@ -124,6 +130,132 @@ class Cube:
     def run(self,moves):
         self._restore()
         moves()
+
+    def sum_w(self,face):
+        return sum([self.faces[face][y].tolist().count('w') for y in range(0,4)]) > facesum
+
+    def if_w_0(self, out1, out2):
+        return partial(if_then_else, self.sum_w(0), out1, out2)
+
+    def if_w_1(self, out1, out2):
+        return partial(if_then_else, self.sum_w(1), out1, out2)
+
+    def if_w_2(self, out1, out2):
+        return partial(if_then_else, self.sum_w(2), out1, out2)
+
+    def if_w_3(self, out1, out2):
+        return partial(if_then_else, self.sum_w(3), out1, out2)
+
+    def if_w_4(self, out1, out2):
+        return partial(if_then_else, self.sum_w(4), out1, out2)
+
+    def if_w_5(self, out1, out2):
+        return partial(if_then_else, self.sum_w(5), out1, out2)
+
+    def sum_r(self,face):
+        return sum([self.faces[face][y].tolist().count('r') for y in range(0,4)]) > facesum
+
+    def if_r_0(self, out1, out2):
+        return partial(if_then_else, self.sum_r(0), out1, out2)
+
+    def if_r_1(self, out1, out2):
+        return partial(if_then_else, self.sum_r(1), out1, out2)
+
+    def if_r_2(self, out1, out2):
+        return partial(if_then_else, self.sum_r(2), out1, out2)
+
+    def if_r_3(self, out1, out2):
+        return partial(if_then_else, self.sum_r(3), out1, out2)
+
+    def if_r_4(self, out1, out2):
+        return partial(if_then_else, self.sum_r(4), out1, out2)
+
+    def if_r_5(self, out1, out2):
+        return partial(if_then_else, self.sum_r(5), out1, out2)
+
+    def sum_y(self,face):
+        return sum([self.faces[face][y].tolist().count('y') for y in range(0,4)]) > facesum
+
+    def if_y_0(self, out1, out2):
+        return partial(if_then_else, self.sum_y(0), out1, out2)
+
+    def if_y_1(self, out1, out2):
+        return partial(if_then_else, self.sum_y(1), out1, out2)
+
+    def if_y_2(self, out1, out2):
+        return partial(if_then_else, self.sum_y(2), out1, out2)
+
+    def if_y_3(self, out1, out2):
+        return partial(if_then_else, self.sum_y(3), out1, out2)
+
+    def if_y_4(self, out1, out2):
+        return partial(if_then_else, self.sum_y(4), out1, out2)
+
+    def if_y_5(self, out1, out2):
+        return partial(if_then_else, self.sum_y(5), out1, out2)
+
+    def sum_o(self,face):
+        return sum([self.faces[face][y].tolist().count('o') for y in range(0,4)]) > facesum
+
+    def if_o_0(self, out1, out2):
+        return partial(if_then_else, self.sum_o(0), out1, out2)
+
+    def if_o_1(self, out1, out2):
+        return partial(if_then_else, self.sum_o(1), out1, out2)
+
+    def if_o_2(self, out1, out2):
+        return partial(if_then_else, self.sum_o(2), out1, out2)
+
+    def if_o_3(self, out1, out2):
+        return partial(if_then_else, self.sum_o(3), out1, out2)
+
+    def if_o_4(self, out1, out2):
+        return partial(if_then_else, self.sum_o(4), out1, out2)
+
+    def if_o_5(self, out1, out2):
+        return partial(if_then_else, self.sum_o(5), out1, out2)
+
+    def sum_b(self,face):
+        return sum([self.faces[face][y].tolist().count('b') for y in range(0,4)]) > facesum
+
+    def if_b_0(self, out1, out2):
+        return partial(if_then_else, self.sum_b(0), out1, out2)
+
+    def if_b_1(self, out1, out2):
+        return partial(if_then_else, self.sum_b(1), out1, out2)
+
+    def if_b_2(self, out1, out2):
+        return partial(if_then_else, self.sum_b(2), out1, out2)
+
+    def if_b_3(self, out1, out2):
+        return partial(if_then_else, self.sum_b(3), out1, out2)
+
+    def if_b_4(self, out1, out2):
+        return partial(if_then_else, self.sum_b(4), out1, out2)
+
+    def if_b_5(self, out1, out2):
+        return partial(if_then_else, self.sum_b(5), out1, out2)
+
+    def sum_g(self,face):
+        return sum([self.faces[face][y].tolist().count('g') for y in range(0,4)]) > facesum
+
+    def if_g_0(self, out1, out2):
+        return partial(if_then_else, self.sum_g(0), out1, out2)
+
+    def if_g_1(self, out1, out2):
+        return partial(if_then_else, self.sum_g(1), out1, out2)
+
+    def if_g_2(self, out1, out2):
+        return partial(if_then_else, self.sum_g(2), out1, out2)
+
+    def if_g_3(self, out1, out2):
+        return partial(if_then_else, self.sum_g(3), out1, out2)
+
+    def if_g_4(self, out1, out2):
+        return partial(if_then_else, self.sum_g(4), out1, out2)
+
+    def if_g_5(self, out1, out2):
+        return partial(if_then_else, self.sum_g(5), out1, out2)
 
     def move_U(self):
         tempFaces = self.faces
