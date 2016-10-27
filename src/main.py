@@ -86,6 +86,18 @@ def loopn(n, arg):
 def loop2(arg):
     return partial(loopn, 2, arg)
 
+def loop3(arg):
+    return partial(loopn, 3, arg)
+
+def loop4(arg):
+    return partial(loopn, 4, arg)
+
+def loop5(arg):
+    return partial(loopn, 5, arg)
+
+def loop6(arg):
+    return partial(loopn, 6, arg)
+
 #def if_then_else(condition, out1, out2):
 #    out1() if condition() else out2()
 #
@@ -97,6 +109,10 @@ testcube = Cube()
 pset = gp.PrimitiveSet("MAIN", 0)
 pset.addPrimitive(prog2, 2)
 pset.addPrimitive(loop2, 1)
+pset.addPrimitive(loop3, 1)
+pset.addPrimitive(loop4, 1)
+pset.addPrimitive(loop5, 1)
+pset.addPrimitive(loop6, 1)
 pset.addPrimitive(testcube.if_w_0, 2)
 pset.addPrimitive(testcube.if_w_1, 2)
 pset.addPrimitive(testcube.if_w_2, 2)
