@@ -6,7 +6,7 @@ import numpy as np
 import random as rand
 import operator as op
 from functools import partial
-from deap import algorithms, creator, base, tools, gp
+from deap import algorithms, creator, base, tools, gp, multiprocessing
 import math
 
 '''
@@ -280,6 +280,9 @@ def main():
     #testcube.printCube()
     testcube._store()
 
+    pool = multiprocessing.Pool(processes=4)
+    toolbox.register("map", pool.map)
+
     pop = toolbox.population(n=80)
     hof=tools.HallOfFame(2)
     stats = tools.Statistics(lambda ind: ind.fitness.values)
@@ -304,6 +307,8 @@ def main():
     testcube.run(bestMoves)
     #testcube.printCube()
     print
+
+    pool.close()
 
     return pop, stats, hof
 
