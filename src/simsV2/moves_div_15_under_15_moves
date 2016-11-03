@@ -1,0 +1,161 @@
+fitness2, 40, 0.8, 0.01
+First
+CXPB = 0.8  MUTPB = 0.01  GEN = 40
+prog4(prog5(move_D2, prog5(move_u, move_u, move_f, move_Da, move_D2), move_da, move_Da, loop3(loop3(prog3(if_g_5(move_u, move_r2), loop3(move_D2), move_Ff2)))), if_y_0(move_da, move_D), if_g_5(move_r2, move_r2), if_g_5(move_r, move_Uu))
+(43.0,)
+prog4(prog5(move_D2, prog5(move_u, move_u, move_f, move_Da, loop3(move_D2)), move_da, move_Da, loop3(loop3(prog3(if_g_5(move_u, move_r2), loop3(move_D2), move_Ff2)))), if_y_0(move_da, move_D), if_g_5(move_r2, move_r2), if_g_5(move_r, move_Uu))
+(43.0,)
+
+Second
+CXPB = 0.8  MUTPB = 0.01  GEN = 40
+loop3(prog5(move_Bb, move_r2, move_d2, prog4(move_Bb, move_r2, move_fa, move_Bba), move_Rr))
+(39.0,)
+loop3(prog5(move_Bb, move_Bb, move_d2, prog4(move_f, move_r2, move_fa, move_Bba), move_Rr))
+(39.0,)
+
+Third
+CXPB = 0.8  MUTPB = 0.01  GEN = 40
+loop3(prog3(move_R2, move_r2, prog3(move_Dd, move_r2, move_R2)))
+(34.0,)
+loop3(prog3(move_Rr, move_Rr, prog3(move_Dd, move_r2, move_R2)))
+(34.0,)
+
+Fourth
+CXPB = 0.8  MUTPB = 0.01  GEN = 40
+prog5(if_g_3(move_l, move_Dd2), if_r_1(if_g_3(if_w_5(move_L2, move_ba), move_Dd2), move_Rr), prog5(move_l, prog5(move_l, move_r, move_Bb2, move_fa, prog2(move_Dd2, move_u2)), move_d, move_L2, prog2(if_w_4(move_F2, move_Dd2), move_Dd2)), if_w_5(move_L2, move_fa), prog2(if_w_4(move_Bb2, move_Dd2), move_u2))
+(41.0,)
+prog5(if_g_3(move_l, move_Dd2), if_r_1(if_g_3(if_w_5(move_L2, move_ba), move_Dd2), move_Rr), prog5(move_l, prog5(move_l, move_r, move_Bb2, move_fa, prog2(if_w_4(move_F2, move_Dd2), move_u2)), move_d, move_L2, prog2(if_w_4(move_F2, move_Dd2), move_Dd2)), if_w_5(move_L2, move_fa), prog2(if_w_4(move_Bb2, move_Dd2), move_u2))
+(41.0,)
+
+fitness2, 50, 0.8, 0.01
+First
+CXPB = 0.8  MUTPB = 0.01  GEN = 50
+prog4(if_g_5(move_r2, move_Ffa), if_w_3(move_d2, prog4(move_R, move_Dd2, if_g_3(if_g_5(move_r2, move_Dd2), move_Ff2), prog4(move_R, move_Dd2, move_Lla, move_Dd2))), prog4(move_R, move_d2, move_Lla, move_d2), if_w_3(move_Ffa, prog4(move_R, move_Dd2, if_g_3(move_Dd2, move_Ff2), move_d2)))
+(39.0,)
+prog4(if_g_5(move_r2, move_Ffa), if_w_3(move_d2, prog4(move_R, move_Dd2, if_g_3(if_g_5(move_r2, move_Ffa), move_Ff2), prog4(move_R, move_Dd2, move_Lla, move_Dd2))), prog4(move_R, move_d2, move_Lla, move_d2), if_w_3(move_Ffa, prog4(move_R, move_Dd2, if_g_3(move_Dd2, move_Ff2), move_d2)))
+(39.0,)
+
+Second
+CXPB = 0.8  MUTPB = 0.01  GEN = 50
+prog5(prog2(loop2(prog2(move_Ua, loop2(loop2(prog2(move_Ua, move_f2))))), move_f2), prog2(move_r2, if_y_1(move_Rr, loop2(prog2(move_Ua, move_f2)))), if_y_5(move_Dd, move_R2), if_w_1(if_y_5(move_Dd, move_R2), move_f2), loop2(prog2(loop2(move_u), move_f2)))
+(41.0,)
+prog5(prog2(loop2(prog2(move_Ua, loop2(loop2(prog2(move_Ua, move_f2))))), move_f2), prog2(move_r2, if_y_1(move_Rr, loop2(prog2(move_Ua, move_f2)))), if_y_5(move_Dd, move_R2), if_w_1(move_R2, move_f2), loop2(prog2(loop2(move_u), move_f2)))
+(41.0,)
+
+Third
+CXPB = 0.8  MUTPB = 0.01  GEN = 50
+prog5(if_w_4(if_w_0(move_Bb2, prog5(if_y_4(if_w_0(move_da, move_Uu2), move_da), move_Ll, move_da, move_da, move_da)), move_Ll), prog5(prog5(move_Ua, if_y_4(move_Dda, prog2(move_Ra, move_Lla)), move_Lla, prog2(move_Ra, move_da), move_Uu2), move_Ll, move_Lla, move_da, move_Uu2), if_w_0(move_da, prog5(move_Ua, move_fa, move_Lla, move_da, move_Lla)), if_y_4(move_Ll, move_r), move_da)
+(39.0,)
+prog5(if_w_4(if_w_0(move_Bb2, prog5(if_y_4(if_w_0(move_da, if_y_4(move_Dda, move_r)), move_da), move_Ll, move_da, move_da, move_da)), move_Ll), prog5(prog5(move_Ua, if_y_4(move_Dda, prog2(move_Ra, move_Lla)), move_Lla, prog2(move_Ra, move_da), move_Uu2), move_Ll, move_Lla, move_da, move_Uu2), if_w_0(move_da, prog5(move_Ua, move_fa, move_Lla, move_da, move_Lla)), if_y_4(move_Ll, move_r), move_da)
+(39.0,)
+
+Fourth
+CXPB = 0.8  MUTPB = 0.01  GEN = 50
+loop3(prog4(move_F2, prog4(move_L2, move_L2, move_B2, move_Uu), prog4(move_L2, move_Bba, prog4(move_L2, move_B2, move_B2, move_Uu), move_Uu), move_Uu))
+(38.0,)
+loop3(prog4(move_F2, prog4(move_L2, move_L2, move_B2, move_Uu), move_B2, move_Uu))
+(38.0,)
+
+fitness2, 60, 0.8, 0.01
+First
+CXPB = 0.8  MUTPB = 0.01  GEN = 60
+prog5(move_Bb, prog4(move_U, move_R, move_R, move_Ff), move_Uu2, move_Ua, prog4(move_U, move_Rra, prog5(move_Ff, move_La, move_da, move_Da, move_Bb), move_Rr))
+(40.0,)
+prog5(move_Bb, prog4(move_U, move_R, move_R, move_Rr), move_Uu2, move_Ua, prog4(move_U, move_Rra, prog5(move_Ff, move_La, move_da, move_Da, move_Bb), move_Rr))
+(40.0,)
+
+Second
+CXPB = 0.8  MUTPB = 0.01  GEN = 60
+if_b_3(loop2(move_Da), prog4(move_Ll, move_r, prog4(loop2(move_Da), prog4(move_Ll, move_d2, prog4(move_Ll, move_d2, move_Bba, loop2(move_r)), move_Bba), move_Da, move_Da), move_d2))
+(42.0,)
+if_b_3(move_b2, prog4(move_Ll, move_r, prog4(loop2(move_Da), prog4(move_Ll, move_d2, prog4(move_Ll, move_d2, move_Bba, loop2(move_r)), move_Bba), move_Da, move_Da), move_d2))
+(42.0,)
+
+Third
+CXPB = 0.8  MUTPB = 0.01  GEN = 60
+prog5(if_w_1(move_Uu, move_F), move_F, if_y_1(move_Uu, move_u2), prog5(move_Uua, prog5(move_Uua, move_F2, move_f, move_Ll, prog5(move_u2, move_u2, move_Ll, move_Ff, move_ba)), move_f, move_Ff, move_Uu), if_y_1(move_F, move_u2))
+(41.0,)
+prog5(if_w_1(move_Uu, move_F), move_F, if_y_1(move_F, move_u2), prog5(move_Uua, prog5(move_Uua, move_F2, move_f, move_Ll, prog5(move_u2, move_u2, move_Ll, move_Ff, move_ba)), move_f, move_Ff, move_Uu), if_y_1(move_F, move_u2))
+(41.0,)
+
+Fourth
+CXPB = 0.8  MUTPB = 0.01  GEN = 60
+prog5(if_y_3(prog4(move_U, move_f2, move_l2, move_B), move_R), if_o_4(if_o_4(move_b, move_Dda), move_Bb2), if_g_2(move_Uu2, loop3(if_o_0(move_R2, move_U))), loop3(loop3(move_Ra)), loop3(move_Bb2))
+(39.0,)
+prog5(if_y_3(prog4(loop3(move_Ra), move_f2, move_l2, move_B), move_R), if_o_4(if_o_4(move_b, move_Dda), move_Bb2), if_g_2(move_Uu2, loop3(if_o_0(move_R2, move_U))), loop3(loop3(move_Ra)), loop3(move_Bb2))
+(39.0,)
+
+First
+Second
+First
+Second
+First
+Second
+First
+Second
+First
+Second
+First
+Second
+First
+Second
+First
+Second
+First
+Second
+First
+Second
+First
+Second
+First
+Second
+First
+Second
+First
+Second
+First
+Second
+First
+Second
+First
+Second
+First
+Second
+First
+Second
+First
+Second
+Third
+Fourth
+First
+Second
+Third
+Fourth
+First
+Second
+Third
+Fourth
+First
+Second
+Third
+Fourth
+First
+Second
+Third
+Fourth
+First
+Second
+Third
+Fourth
+First
+Second
+Third
+Fourth
+First
+Second
+Third
+Fourth
+First
+Second
+Third
+Fourth

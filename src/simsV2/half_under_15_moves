@@ -1,0 +1,87 @@
+fitness2, 40, 0.8, 0.01
+First
+CXPB = 0.8  MUTPB = 0.01  GEN = 40
+prog5(if_b_5(move_f, move_f), prog3(if_b_2(move_Ff2, move_Da), if_w_4(move_Bb2, move_Da), move_f), if_y_2(prog3(move_d2, if_w_4(move_Bb2, move_d2), move_f), move_Ra), if_b_2(move_f, move_Da), move_r2)
+(19.5,)
+prog5(if_b_5(move_f, move_f), prog3(if_b_2(move_Ff2, move_Da), if_w_4(move_Bb2, move_Da), move_f), if_y_2(prog3(if_g_0(move_Bba, if_y_2(move_Rr2, move_Ra)), if_w_4(move_Bb2, move_d2), move_f), move_Ra), if_b_2(move_f, move_Da), move_r2)
+(19.5,)
+
+Second
+CXPB = 0.8  MUTPB = 0.01  GEN = 40
+prog5(if_better(if_better(move_r2, move_Ll), move_Ll), move_R, move_Da, move_F2, move_Uua)
+(21.5,)
+prog5(if_better(move_r2, move_Ll), move_R, move_Da, move_F2, move_Uua)
+(21.5,)
+
+Third
+CXPB = 0.8  MUTPB = 0.01  GEN = 40
+prog5(if_r_2(move_la, move_Uu2), if_y_5(move_Uu2, move_L), move_da, move_da, if_r_0(move_d2, move_b2))
+(18.5,)
+prog5(if_r_2(move_la, move_Uu2), if_y_5(move_L2, move_L), move_da, move_da, if_r_0(move_d2, move_b2))
+(18.5,)
+
+Fourth
+CXPB = 0.8  MUTPB = 0.01  GEN = 40
+prog4(if_r_3(move_R2, move_fa), loop3(move_r), if_o_3(move_f2, move_Rr), if_y_2(move_B, move_D2))
+(19.0,)
+prog4(if_r_3(move_ba, move_fa), loop3(move_r), if_o_3(move_f2, move_Rr), if_y_2(move_B, move_D2))
+(19.0,)
+
+fitness2, 50, 0.8, 0.01
+First
+CXPB = 0.8  MUTPB = 0.01  GEN = 50
+prog4(move_Rr2, move_Ra, move_Ff2, move_ua)
+(22.0,)
+prog4(move_Ra, move_Rr2, move_Ff2, move_ua)
+(22.0,)
+
+Second
+CXPB = 0.8  MUTPB = 0.01  GEN = 50
+loop3(prog5(move_ua, move_Ra, move_f, move_D2, move_D2))
+(40.0,)
+loop3(prog5(move_ua, move_Ra, move_D2, move_D2, move_f))
+(40.0,)
+
+Third
+CXPB = 0.8  MUTPB = 0.01  GEN = 50
+if_b_5(if_b_5(move_Rr2, prog4(move_u2, move_Rr2, move_R, move_Rr2)), prog4(move_u2, prog4(move_Ll2, prog4(move_Ll2, prog4(move_U2, move_Rr2, move_R, move_U2), move_R, prog4(move_u2, prog4(move_u2, move_ua, move_R, move_Rr2), move_R, move_U2)), move_Rr2, move_Ll2), move_R, move_U2))
+(44.0,)
+if_b_5(move_u2, prog4(move_u2, prog4(prog4(move_u2, move_ua, move_R, move_Rr2), prog4(move_Ll2, move_Ll2, move_R, prog4(move_u2, move_Rr2, move_R, prog4(move_u2, prog4(move_u2, move_ua, move_R, move_Rr2), move_R, move_U2))), move_U2, move_R), move_R, move_U2))
+(44.0,)
+
+Fourth
+CXPB = 0.8  MUTPB = 0.01  GEN = 50
+prog2(if_o_2(if_w_1(move_b, move_R), if_w_3(move_D, move_u2)), move_R)
+(19.0,)
+prog2(move_u2, move_R)
+(19.0,)
+
+fitness2, 60, 0.8, 0.01
+First
+CXPB = 0.8  MUTPB = 0.01  GEN = 60
+prog3(move_R, move_u2, move_D2)
+(19.5,)
+prog3(move_R, move_D2, move_u2)
+(19.5,)
+
+Second
+CXPB = 0.8  MUTPB = 0.01  GEN = 60
+prog3(move_R, if_g_1(move_Ll2, move_u2), move_Dd)
+(19.5,)
+prog3(move_R, if_g_1(move_F, move_u2), move_Dd)
+(19.5,)
+
+Third
+CXPB = 0.8  MUTPB = 0.01  GEN = 60
+if_b_5(if_o_3(move_l2, move_Ba), move_R)
+(17.0,)
+if_b_5(move_Bb, move_R)
+(17.0,)
+
+Fourth
+CXPB = 0.8  MUTPB = 0.01  GEN = 60
+if_y_0(prog5(move_Rr2, move_ba, move_Rr2, move_Rr2, if_w_4(move_u2, move_Rr2)), loop3(prog5(move_R, move_Rr2, move_Rr2, loop3(prog5(move_Rr2, move_Rr2, move_Rr2, move_ba, move_Rr2)), move_Rr2)))
+(39.0,)
+if_y_0(prog5(move_Rr2, move_ba, move_Rr2, move_Rr2, if_w_4(move_u2, move_Ra)), loop3(prog5(move_R, move_Rr2, move_Rr2, loop3(prog5(move_Rr2, move_Rr2, move_Rr2, move_ba, move_Rr2)), move_Rr2)))
+(39.0,)
+

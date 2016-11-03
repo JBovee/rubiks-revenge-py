@@ -1,0 +1,75 @@
+fitness2, 40, 0.8, 0.01
+CXPB = 0.8  MUTPB = 0.01  GEN = 40
+prog6(move_U, prog6(move_U, move_b2, move_r, move_l2, move_u, move_F2), prog8(move_Lla, move_Uu, move_L, prog6(move_U, move_b2, move_r2, move_la, move_u, move_F2), move_l2, move_r, move_u, move_r), loop3(move_Bba), move_Bba, prog3(move_r, move_U, move_u))
+(40.0,)
+prog6(move_U, prog6(move_U, move_b2, move_r, move_la, move_u, move_F2), prog8(move_Lla, move_Uu, move_L, prog6(move_U, move_b2, move_r2, move_la, move_u, move_F2), move_l2, move_r, move_u, move_r), loop3(move_Bba), move_Bba, prog3(move_r, move_U, move_u))
+(40.0,)
+
+CXPB = 0.8  MUTPB = 0.01  GEN = 40
+prog8(prog5(move_da, move_f, move_Dda, move_fa, move_Ba), prog5(move_r2, move_La, move_Ra, move_Rr, move_Rra), if_o_2(move_b2, if_o_2(move_b2, move_da)), move_Ba, if_r_0(move_d, move_R2), loop3(move_ua), prog6(loop3(move_ua), move_d, move_Bba, move_F2, move_F2, move_Rra), if_g_3(move_Da, move_d))
+(39.0,)
+prog8(prog5(move_da, move_f, move_Dda, move_fa, move_Ba), prog5(move_r2, move_La, move_Ra, move_Rr, move_Rra), if_o_2(move_b2, move_da), move_Ba, if_r_0(move_d, move_R2), loop3(move_ua), prog6(loop3(move_ua), move_d, move_Bba, move_F2, move_F2, move_Rra), if_g_3(move_Da, move_d))
+(39.0,)
+
+CXPB = 0.8  MUTPB = 0.01  GEN = 40
+prog5(prog7(move_Ff2, move_Ff, move_Rra, move_d2, move_Ua, move_f2, move_Rr), prog6(move_Rr2, move_b2, move_u2, move_Bb, move_f2, move_u2), prog7(prog7(move_Bb, move_Rra, move_Ra, move_f2, move_Fa, move_Ffa, move_Ll2), move_Rra, move_Ra, move_Fa, move_Fa, move_Ffa, move_Ll2), prog3(if_r_3(move_Ll2, move_u2), move_ua, prog6(move_ua, move_d2, move_La, move_f2, move_da, move_u)), if_w_1(move_Dd, move_r2))
+(37.0,)
+prog5(prog7(move_Ff2, move_Ff, move_Rra, move_d2, move_Ua, move_f2, move_Rr), prog6(move_Rr2, move_b2, move_u2, move_Bb, move_f2, move_u2), prog7(prog7(move_Bb, move_Rra, move_Ra, move_f2, move_Fa, move_Ffa, move_Ll2), move_Rra, move_Ra, move_Fa, move_Fa, move_Ffa, move_Ll2), prog3(if_r_3(move_r, move_u2), move_ua, prog6(move_ua, move_d2, move_La, move_f2, move_da, move_u)), if_w_1(move_Dd, move_r2))
+(37.0,)
+
+CXPB = 0.8  MUTPB = 0.01  GEN = 40
+prog5(prog5(prog5(move_Rra, move_ba, move_b2, move_f, move_b2), move_L2, move_b2, move_f, move_b2), move_f, prog7(move_D2, move_ba, prog8(move_Bb2, move_D2, prog5(move_Rra, move_L2, move_b2, move_f, move_U2), move_fa, move_u, move_Uu2, move_R2, move_b2), move_l2, move_b2, move_U2, move_Uu2), move_R2, move_Ra)
+(43.0,)
+prog5(prog5(prog5(move_Rra, move_L2, move_b2, move_f, move_b2), move_L2, move_b2, move_f, move_b2), move_f, prog7(move_D2, move_ba, prog8(move_Bb2, move_D2, prog5(move_Rra, move_L2, move_b2, move_f, move_U2), move_fa, move_u, move_Uu2, move_R2, move_b2), move_l2, move_b2, move_U2, move_Uu2), move_R2, move_Ra)
+(43.0,)
+
+fitness2, 50, 0.8, 0.01
+CXPB = 0.8  MUTPB = 0.01  GEN = 50
+prog6(move_da, prog7(prog7(move_Dd2, move_d, move_Fa, move_ba, move_Ff, move_da, move_Uu2), move_r, move_da, move_ba, move_Ff, move_da, prog7(move_Dd2, move_da, move_d, move_ba, move_Ff, move_da, move_Uu2)), prog7(prog7(move_Dd2, move_r, move_d, move_ba, move_Ff, move_da, move_Uu2), move_r, move_d, move_ba, move_Ff, move_da, move_Uu2), if_r_0(move_Ff, move_Bb2), move_Ff, move_B2)
+(41.0,)
+prog6(move_da, prog7(prog7(move_Dd2, move_d, move_Fa, move_ba, move_Ff, move_da, move_Uu2), move_r, move_da, move_ba, move_Ff, move_da, prog7(move_Dd2, move_da, move_d, move_ba, move_Ff, move_da, move_Uu2)), prog7(prog7(move_Dd2, move_r, move_d, move_ba, move_Ff, move_da, move_Uu2), move_r, move_d, move_ba, move_Ff, move_da, move_Uu2), if_r_0(move_Da, move_Bb2), move_Ff, move_B2)
+(41.0,)
+
+CXPB = 0.8  MUTPB = 0.01  GEN = 50
+prog5(prog4(move_Ua, move_d2, move_d, move_La), prog8(move_F, move_Ll2, move_Bb2, loop3(move_D2), move_La, move_ra, move_Ra, move_U2), if_b_0(if_b_0(move_Ff, loop3(move_d2)), move_Ll), prog5(move_Da, move_Ff, move_Ua, move_La, prog5(move_Da, move_F, move_Ua, move_La, move_F)), if_b_4(prog5(move_Da, move_Ff, move_Ua, move_La, prog5(move_La, move_F, move_Ua, move_La, move_F)), if_b_4(move_Da, move_D2)))
+(41.0,)
+prog5(prog4(move_Ua, move_d2, move_d, move_La), prog8(move_F, move_Ll2, move_Bb2, loop3(move_D2), move_La, move_ra, move_Ra, move_U2), if_b_0(move_Da, move_Ll), prog5(move_Da, move_Ff, move_Ua, move_La, prog5(move_Da, move_F, move_Ua, move_La, move_F)), if_b_4(move_ra, if_b_4(move_Da, move_D2)))
+(41.0,)
+
+CXPB = 0.8  MUTPB = 0.01  GEN = 50
+prog8(prog3(move_f, move_D2, move_Rra), move_ra, if_y_1(move_ra, move_Rr2), if_w_5(move_ra, move_Bb2), prog6(move_Rra, move_b, move_Uu, move_La, move_F2, move_Rr), move_La, move_La, prog8(move_F2, move_Uua, move_Rr2, move_ra, move_r2, move_B2, prog8(move_F2, move_Uua, if_y_1(move_ra, move_Rr2), move_ra, move_r2, move_B2, move_Rra, move_Ffa), move_Ffa))
+(41.0,)
+prog8(prog3(move_f, move_D2, move_Rra), move_ra, if_y_1(move_ra, move_Rr2), if_w_5(move_ra, move_Bb2), prog6(move_Rra, move_b, move_Uu, move_La, move_F2, move_Rr), move_La, move_La, prog8(move_F2, move_Uua, move_Rr2, move_ra, move_r2, move_B2, prog8(move_F2, move_Uua, move_Rr2, move_ra, move_r2, move_B2, move_Rra, move_Ffa), move_Ffa))
+(41.0,)
+
+CXPB = 0.8  MUTPB = 0.01  GEN = 50
+loop3(prog4(move_B, move_fa, prog4(move_Dd, prog4(if_g_5(if_y_5(move_r, move_da), if_w_1(move_Ffa, move_Lla)), move_U2, move_b, move_Dd), prog4(move_B, move_B, move_b, prog4(move_B, move_Ffa, move_b, prog4(move_B, move_b, move_b, move_Dd))), move_Dd), move_Dd))
+(37.0,)
+loop3(prog4(move_B, move_fa, prog4(move_Dd, prog4(if_g_5(if_y_5(move_r, move_da), if_w_1(move_Da, move_Lla)), move_U2, move_b, move_Dd), prog4(move_B, move_B, move_b, prog4(move_B, move_Ffa, move_b, prog4(move_B, move_b, move_b, move_Dd))), move_Dd), move_Dd))
+(37.0,)
+
+fitness2, 60, 0.8, 0.01
+CXPB = 0.8  MUTPB = 0.01  GEN = 60
+prog7(if_g_0(move_Rra, move_ua), if_w_0(move_R2, move_D), if_g_0(move_D, prog8(move_ua, move_Lla, move_Ffa, move_R2, move_B2, move_Bb, move_Bb2, move_D)), if_better(move_d2, prog8(move_ua, move_Lla, move_Ffa, prog8(move_ua, move_Ll2, move_Ffa, move_R2, move_B2, move_Bb, move_Bb2, move_D), move_B2, move_Bb, move_Bb2, move_D)), if_g_5(move_La, if_g_4(move_R2, move_La)), prog8(move_Fa, move_Lla, move_Ffa, move_R2, move_B2, move_Bb, prog8(move_Ll2, move_R2, move_R2, move_fa, move_Bb, move_F2, move_Lla, move_U), move_D), if_g_3(move_R2, move_Ff2))
+(40.0,)
+prog7(if_g_0(move_Rra, move_ua), if_w_0(move_R2, move_D), if_g_0(move_D, prog8(move_ua, move_Lla, move_Ffa, move_R2, move_B2, move_Bb, move_Bb2, move_D)), if_better(move_d2, prog8(move_R2, move_Lla, move_Ffa, move_R2, move_Ffa, move_Bb, move_Bb2, move_D)), if_g_5(move_La, if_g_4(move_R2, move_La)), prog8(move_Fa, move_Lla, move_Ffa, move_R2, move_B2, move_Bb, prog8(move_Ll2, move_R2, move_R2, move_fa, move_Bb, move_F2, move_Lla, move_U), move_D), if_g_3(move_R2, move_Ff2))
+(40.0,)
+
+CXPB = 0.8  MUTPB = 0.01  GEN = 60
+prog5(prog8(move_Fa, move_f2, move_Uu, move_b, move_Dd, move_r, move_Ff, move_f), prog7(if_g_1(prog8(move_fa, move_U2, prog4(prog8(move_Fa, move_Dda, move_Uu, move_Dda, move_Ff, move_r, move_Ff, move_Dda), move_Fa, move_Uu, move_u), move_b, prog8(move_fa, move_U2, move_Uu, move_b, move_Dd, move_r, move_Ff, move_Uu), move_r, move_Ff, move_B2), move_Ua), move_R, move_f, move_fa, move_Rra, prog8(move_fa, move_U2, move_Uu, move_b, move_Dd, move_r, move_Ff, move_B2), prog4(prog8(move_Fa, move_f2, move_Uu, move_b, move_Dd, move_r, move_Ff, move_Dda), move_Fa, move_f, move_u)), prog4(move_Ffa, move_Ffa, move_Ua, if_g_2(prog7(if_g_1(move_fa, move_Ua), move_R, move_f, move_fa, move_Rra, prog8(move_fa, move_U2, move_Uu, move_b, move_Dd, move_r, move_Ff, move_B2), prog4(prog8(move_Fa, move_f2, move_Uu, move_b, move_Dd, move_r, move_Ff, move_Dda), move_Fa, move_f, move_u)), move_Dda)), move_f, if_r_5(move_Ffa, move_U2))
+(42.0,)
+prog5(prog8(move_Fa, move_f2, move_Uu, move_b, move_Dd, move_r, move_Ff, move_f), prog7(if_g_1(prog8(move_fa, move_U2, prog4(prog8(move_Fa, move_Dda, move_Uu, move_Dda, move_Ff, move_r, move_Ff, move_Dda), move_Fa, move_Uu, move_u), move_b, prog8(move_fa, move_U2, move_Uu, move_b, move_Dd, move_r, move_Ff, move_B2), move_r, move_Ff, move_B2), move_Ua), move_R, move_f, move_fa, move_Rra, prog8(move_fa, move_U2, move_Uu, move_b, move_Dd, move_r, move_Ff, move_B2), prog4(prog8(move_Fa, move_f2, move_Uu, move_b, move_Dd, move_r, move_Ff, move_Dda), move_Fa, move_f, move_u)), prog4(move_Ffa, move_Ffa, move_Ua, if_g_2(prog7(if_g_1(move_fa, move_Ua), move_R, move_f, move_fa, move_Rra, prog8(move_fa, move_U2, move_Uu, move_b, move_Dd, move_r, move_Ff, move_B2), prog4(prog8(move_Fa, move_f2, move_Uu, move_b, move_Dd, move_r, move_Ff, move_Dda), move_Fa, move_f, move_u)), move_Dda)), move_f, if_r_5(move_Ffa, move_U2))
+(42.0,)
+
+CXPB = 0.8  MUTPB = 0.01  GEN = 60
+prog7(if_r_5(move_f, move_f), if_o_5(move_Ff2, move_ra), move_Rr, if_o_2(move_Ll2, move_U2), if_y_4(prog7(move_R2, move_Bb, loop2(move_Fa), move_Ll2, move_b2, move_b2, move_ra), move_d2), prog7(prog7(move_R2, move_U2, move_Fa, move_Ll2, prog7(move_R2, move_Bb, move_Fa, move_Ll2, prog7(move_R2, move_Bb, loop2(move_F), move_Ll2, move_b2, move_b2, loop2(move_F)), move_b2, move_F), move_b2, move_f), move_U2, if_o_2(prog7(move_R2, move_U2, move_Fa, move_Ll2, prog7(move_R2, move_Bb, move_Fa, move_Ll2, prog7(move_R2, move_Bb, move_Fa, move_Ll2, move_b2, move_b2, loop2(move_F)), move_b2, move_F), move_b2, move_f), move_U2), move_Ll2, move_b2, move_F, move_f), prog7(move_R2, move_Bb, loop2(move_Fa), move_Ll2, move_b2, move_b2, prog7(move_R2, move_Bb, move_Fa, move_Ll2, prog7(move_R2, move_Bb, move_Fa, move_Ll2, move_Bb, move_b2, loop2(move_F)), move_b2, move_Fa)))
+(45.0,)
+prog7(if_r_5(move_f, move_f), if_o_5(move_Ff2, move_ra), move_Rr, if_o_2(move_Ll2, move_U2), if_y_4(prog7(move_R2, move_Bb, loop2(move_Fa), move_Ll2, move_b2, move_b2, move_ra), move_d2), prog7(prog7(move_R2, move_U2, move_Fa, move_Ll2, prog7(move_R2, move_Bb, move_Fa, move_Ll2, prog7(move_R2, move_Bb, loop2(move_F), move_Ll2, move_b2, move_b2, loop2(move_F)), move_b2, move_F), move_b2, move_f), move_U2, if_o_2(move_D2, move_U2), move_Ll2, move_b2, move_F, move_f), prog7(move_R2, move_Bb, loop2(move_Fa), move_Ll2, move_b2, move_b2, prog7(move_R2, move_Bb, move_Fa, move_Ll2, prog7(move_R2, move_Bb, move_Fa, move_Ll2, move_Bb, move_b2, loop2(move_F)), move_b2, move_Fa)))
+(45.0,)
+
+CXPB = 0.8  MUTPB = 0.01  GEN = 60
+prog7(if_y_0(prog3(move_Uu2, move_Uu2, prog7(move_u2, move_da, move_ba, move_D, move_Bba, move_Ll2, move_Bb2)), move_La), move_Lla, if_g_5(prog3(prog3(move_Uu2, move_Uu2, move_da), move_Uu2, prog7(move_u2, move_da, move_ba, loop2(move_r), move_Bba, move_Ll2, move_Bb2)), move_D), if_r_0(move_Ra, move_b2), prog7(move_u2, move_Lla, move_ba, move_L, move_f2, move_Ll2, move_f2), prog3(move_Uu2, move_Uu2, prog7(move_u2, move_da, move_ba, move_L, move_Bba, move_Ll2, move_Bb2)), prog5(move_B, move_Ff2, if_g_5(move_f2, move_D), move_ra, move_Ff2))
+(41.0,)
+prog7(if_y_0(prog3(move_Uu2, move_Uu2, prog7(move_u2, move_da, move_ba, move_D, move_Bba, move_Ll2, move_Bb2)), move_La), move_Lla, if_g_5(prog3(prog3(move_Uu2, move_Uu2, prog7(move_u2, move_da, move_f2, move_L, move_Bba, move_Ll2, move_Bb2)), move_Uu2, prog7(move_u2, move_da, move_ba, loop2(move_r), move_Bba, move_Ll2, move_Bb2)), move_D), if_r_0(move_Ra, move_b2), prog7(move_u2, move_Lla, move_ba, move_L, move_f2, move_Ll2, move_f2), prog3(move_Uu2, move_Uu2, prog7(move_u2, move_da, move_ba, move_L, move_Bba, move_Ll2, move_Bb2)), prog5(move_B, move_Ff2, if_g_5(move_f2, move_D), move_ra, move_Ff2))
+(41.0,)
+

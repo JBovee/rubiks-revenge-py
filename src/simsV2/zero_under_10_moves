@@ -1,0 +1,87 @@
+fitness2, 40, 0.8, 0.01
+First
+CXPB = 0.8  MUTPB = 0.01  GEN = 40
+prog4(if_b_3(move_Rra, move_La), prog4(move_ra, if_w_4(move_da, move_D), move_Rra, move_B), move_Dd2, if_g_1(move_r, prog4(move_D, prog4(move_Ba, if_w_4(move_da, move_D), move_Rra, move_B), move_Rra, move_B)))
+(40.0,)
+prog4(if_b_3(move_Ba, move_La), prog4(move_ra, if_w_4(move_da, move_D), move_Rra, move_B), move_Dd2, if_g_1(move_r, prog4(move_D, prog4(move_Ba, if_w_4(move_da, move_D), move_Rra, move_B), move_Rra, move_B)))
+(40.0,)
+
+Second
+CXPB = 0.8  MUTPB = 0.01  GEN = 40
+loop3(prog4(move_l, move_Bb, move_U2, move_Ff2))
+(39.0,)
+loop3(prog4(move_l, move_Bb, move_Ff2, move_l))
+(38.0,)
+
+Third
+CXPB = 0.8  MUTPB = 0.01  GEN = 40
+if_w_3(if_g_5(move_f2, move_Bba), if_o_1(move_fa, move_Ll))
+(0.0,)
+if_r_0(move_Uu, move_R)
+(0.0,)
+
+Fourth
+CXPB = 0.8  MUTPB = 0.01  GEN = 40
+if_o_1(if_r_2(move_ba, move_Ff2), if_y_5(move_Ra, move_Ua))
+(0.0,)
+if_y_1(move_Rra, move_R)
+(0.0,)
+
+fitness2, 50, 0.8, 0.01
+First
+CXPB = 0.8  MUTPB = 0.01  GEN = 50
+if_b_1(move_Ua, move_ra)
+(0.0,)
+if_g_3(if_w_2(move_Dda, move_Bb), if_o_2(move_R2, move_b))
+(0.0,)
+
+Second
+CXPB = 0.8  MUTPB = 0.01  GEN = 50
+loop3(prog4(move_Rr, move_Rr, move_U, move_Rr))
+(38.0,)
+loop3(prog4(move_Rr, move_Rr, move_r, move_Rra))
+(36.0,)
+
+Third
+CXPB = 0.8  MUTPB = 0.01  GEN = 50
+if_o_0(if_y_2(move_Uu2, move_u2), if_b_2(move_d2, move_f))
+(0.0,)
+prog3(if_o_1(move_L, move_B2), if_o_3(move_L2, move_da), if_w_2(move_Ll2, move_R))
+(0.0,)
+
+Fourth
+CXPB = 0.8  MUTPB = 0.01  GEN = 50
+if_b_5(if_g_1(move_Lla, move_Ua), if_b_4(move_F2, move_L2))
+(0.0,)
+prog3(move_Bba, move_Bb, move_La)
+(0.0,)
+
+fitness2, 60, 0.8, 0.01
+First
+CXPB = 0.8  MUTPB = 0.01  GEN = 60
+if_w_3(move_Uua, move_r)
+(0.0,)
+if_g_5(if_w_5(move_Ra, move_Ua), prog3(move_F2, move_ua, move_ba))
+(0.0,)
+
+Second
+CXPB = 0.8  MUTPB = 0.01  GEN = 60
+if_w_5(move_Dda, move_Ua)
+(0.0,)
+if_y_4(prog4(move_u, move_u2, move_ra, move_Dd), if_o_4(move_Rr2, move_Ff2))
+(0.0,)
+
+Third
+CXPB = 0.8  MUTPB = 0.01  GEN = 60
+if_w_3(move_Uu, move_ba)
+(0.0,)
+if_b_5(prog2(move_b, move_Ua), if_r_0(move_ua, move_ba))
+(0.0,)
+
+Fourth
+CXPB = 0.8  MUTPB = 0.01  GEN = 60
+if_r_3(move_r2, prog5(move_r2, move_B2, move_Dda, move_La, prog5(move_r2, move_B2, move_Dda, move_La, if_y_1(move_u2, prog5(move_Ff, move_u2, move_B2, move_Dda, if_y_1(if_w_3(if_r_2(if_y_1(move_la, move_la), move_f), move_da), move_Ll2))))))
+(30.0,)
+if_r_3(move_r2, prog5(move_r2, move_B2, move_Dda, move_La, prog5(move_r2, move_B2, move_Dda, move_La, if_y_1(move_u2, prog5(move_Ff, move_u2, move_B2, move_Dda, if_y_1(move_r2, move_Ll2))))))
+(30.0,)
+
