@@ -38,7 +38,7 @@ def fitness1(faces):
     return sum(faceTotals)
 
 def fitness2(faces):
-    return float("{0:.2f}".format(np.average([Counter(x for face in faces[y].tolist() for x in face).most_common(1)[0][1] for y in range(0,6)])))
+    return np.sum([Counter(x for face in faces[y].tolist() for x in face).most_common(1)[0][1] for y in range(0,6)])
 
 def fitness3(faces):
     centerOptions = ['w','r','y','o','b','g']
@@ -87,6 +87,24 @@ def progn(*args):
 def prog2(out1, out2):
     return partial(progn, out1, out2)
 
+def prog3(out1, out2, out3):
+    return partial(progn, out1, out2, out3)
+
+def prog4(out1, out2, out3, out4):
+    return partial(progn, out1, out2, out3, out4)
+
+def prog5(out1, out2, out3, out4, out5):
+    return partial(progn, out1, out2, out3, out4, out5)
+
+def prog6(out1, out2, out3, out4, out5, out6):
+    return partial(progn, out1, out2, out3, out4, out5, out6)
+
+def prog7(out1, out2, out3, out4, out5, out6, out7):
+    return partial(progn, out1, out2, out3, out4, out5, out6, out7)
+
+def prog8(out1, out2, out3, out4, out5, out6, out7, out8):
+    return partial(progn, out1, out2, out3, out4, out5, out6, out7, out8)
+
 def loopn(n, arg):
     for i in xrange(n):
         arg()
@@ -117,11 +135,17 @@ testcube.setFitFunc(sys.argv[4])
 
 pset = gp.PrimitiveSet("MAIN", 0)
 pset.addPrimitive(prog2, 2)
+pset.addPrimitive(prog3, 3)
+pset.addPrimitive(prog4, 4)
+pset.addPrimitive(prog5, 5)
+pset.addPrimitive(prog6, 6)
+pset.addPrimitive(prog7, 7)
+pset.addPrimitive(prog8, 8)
 pset.addPrimitive(loop2, 1)
 pset.addPrimitive(loop3, 1)
-pset.addPrimitive(loop4, 1)
-pset.addPrimitive(loop5, 1)
-pset.addPrimitive(loop6, 1)
+#pset.addPrimitive(loop4, 1)
+#pset.addPrimitive(loop5, 1)
+#pset.addPrimitive(loop6, 1)
 pset.addPrimitive(testcube.if_better, 2)
 pset.addPrimitive(testcube.if_w_0, 2)
 pset.addPrimitive(testcube.if_w_1, 2)
@@ -229,8 +253,8 @@ def evalCube(individual):
     return testcube.fitness(),
 
 toolbox.register("evaluate", evalCube)
-#toolbox.register("select", tools.selTournament, tournsize=7)
-toolbox.register("select", tools.selDoubleTournament, fitness_size=7, parsimony_size=1.4, fitness_first=False)
+toolbox.register("select", tools.selTournament, tournsize=7)
+#toolbox.register("select", tools.selDoubleTournament, fitness_size=7, parsimony_size=1.4, fitness_first=False)
 toolbox.register("mate", gp.cxOnePoint)
 toolbox.register("expr_mut", gp.genFull, min_=0, max_=2)
 toolbox.register("mutate", gp.mutUniform, expr=toolbox.expr_mut, pset=pset)
@@ -257,7 +281,7 @@ def main():
     testcube._store()
 
     pop = toolbox.population(n=80)
-    hof=tools.HallOfFame(1)
+    hof=tools.HallOfFame(2)
     stats = tools.Statistics(lambda ind: ind.fitness.values)
     stats.register("avg", np.mean)
     stats.register("std", np.std)
@@ -274,6 +298,8 @@ def main():
 
     print(hof[0])
     print(hof[0].fitness)
+    print(hof[1])
+    print(hof[1].fitness)
     bestMoves = gp.compile(hof[0],pset)
     testcube.run(bestMoves)
     #testcube.printCube()

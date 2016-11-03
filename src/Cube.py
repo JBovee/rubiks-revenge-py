@@ -1,4 +1,5 @@
 from __future__ import print_function
+from __future__ import division
 import numpy as np
 import random as rand
 import operator as op
@@ -36,15 +37,19 @@ class Cube(object):
                                 ['g','g','g','g'],
                                 ['g','g','g','g']]])
 
-        self.moveCount = 0
+        self.moveCount = 0.0
 
         self.storedfaces = np.full([6,4,4], '', dtype=np.str)
 
         self.temp = np.full([6,4,4], '', dtype=np.str)
 
-        self.facesum = 8
+        self.facesum = 4
 
         self.fitFunc = "f1"
+
+        self.currentFit = 0.0
+
+        self.bestFit = 0.0
 
         self.moves = np.array(['U','D','L','R','F','B','u','d','l','r','f','b','Uu','Dd','Ll','Rr','Ff','Bb','Ua','Da','La','Ra','Fa','Ba','ua','da','la','ra','fa','ba','Uua','Dda','Lla','Rra','Ffa','Bba','U2','D2','L2','R2','F2','B2','u2','d2','l2','r2','f2','b2','Uu2','Dd2','Ll2','Rr2','Ff2','Bb2'])
 
@@ -106,7 +111,8 @@ class Cube(object):
         np.copyto(self.storedfaces, self.faces)
 
     def _restore(self):
-        self.moveCount = 0
+        self.moveCount = 0.0
+        self.bestFit = 0.0
         np.copyto(self.faces,self.storedfaces)
 
     def setFitFunc(self, fit):
@@ -151,6 +157,10 @@ class Cube(object):
     def run(self,moves):
         self._restore()
         moves()
+        bestfit = self.bestFit
+        self._restore()
+        while(self.currentFit < bestfit):
+            moves()
 
     def if_better(self, move1, move2):
         np.copyto(self.temp, self.faces)
@@ -289,117 +299,159 @@ class Cube(object):
         return partial(if_then_else, self.sum_g(5), out1, out2)
 
     def move_U(self):
-        self.moveCount += 1
+        self.moveCount += 1.0
         tempFaces = self.faces
         tempFaces = self.xRegTurn(tempFaces,0)
         tempFaces = self.rotateFace(tempFaces,4,True)
         self.faces = tempFaces
+        self.currentFit = self.fitness()
+        if self.currentFit > self.bestFit:
+            self.bestFit = self.currentFit
 
     def move_D(self):
-        self.moveCount += 1
+        self.moveCount += 1.0
         tempFaces = self.faces
         tempFaces = self.xAntiTurn(tempFaces,3)
         tempFaces = self.rotateFace(tempFaces,5,True)
         self.faces = tempFaces
+        self.currentFit = self.fitness()
+        if self.currentFit > self.bestFit:
+            self.bestFit = self.currentFit
 
     def move_L(self):
-        self.moveCount += 1
+        self.moveCount += 1.0
         tempFaces = self.faces
         tempFaces = self.XtoY(tempFaces)
         tempFaces = self.xRegTurn(tempFaces,0)
         tempFaces = self.rotateFace(tempFaces,4,True)
         tempFaces = self.YtoX(tempFaces)
         self.faces = tempFaces
+        self.currentFit = self.fitness()
+        if self.currentFit > self.bestFit:
+            self.bestFit = self.currentFit
 
     def move_R(self):
-        self.moveCount += 1
+        self.moveCount += 1.0
         tempFaces = self.faces
         tempFaces = self.XtoY(tempFaces)
         tempFaces = self.xAntiTurn(tempFaces,3)
         tempFaces = self.rotateFace(tempFaces,5,True)
         tempFaces = self.YtoX(tempFaces)
         self.faces = tempFaces
+        self.currentFit = self.fitness()
+        if self.currentFit > self.bestFit:
+            self.bestFit = self.currentFit
 
     def move_F(self):
-        self.moveCount += 1
+        self.moveCount += 1.0
         tempFaces = self.faces
         tempFaces = self.XtoZ(tempFaces)
         tempFaces = self.xRegTurn(tempFaces,0)
         tempFaces = self.rotateFace(tempFaces,4,True)
         tempFaces = self.ZtoX(tempFaces)
         self.faces = tempFaces
+        self.currentFit = self.fitness()
+        if self.currentFit > self.bestFit:
+            self.bestFit = self.currentFit
 
     def move_B(self):
-        self.moveCount += 1
+        self.moveCount += 1.0
         tempFaces = self.faces
         tempFaces = self.XtoZ(tempFaces)
         tempFaces = self.xAntiTurn(tempFaces,3)
         tempFaces = self.rotateFace(tempFaces,5,True)
         tempFaces = self.ZtoX(tempFaces)
         self.faces = tempFaces
+        self.currentFit = self.fitness()
+        if self.currentFit > self.bestFit:
+            self.bestFit = self.currentFit
 
     def move_u(self):
-        self.moveCount += 1
+        self.moveCount += 1.0
         tempFaces = self.faces
         tempFaces = self.xRegTurn(tempFaces,1)
         self.faces = tempFaces
+        self.currentFit = self.fitness()
+        if self.currentFit > self.bestFit:
+            self.bestFit = self.currentFit
 
     def move_d(self):
-        self.moveCount += 1
+        self.moveCount += 1.0
         tempFaces = self.faces
         tempFaces = self.xAntiTurn(tempFaces,2)
         self.faces = tempFaces
+        self.currentFit = self.fitness()
+        if self.currentFit > self.bestFit:
+            self.bestFit = self.currentFit
 
     def move_l(self):
-        self.moveCount += 1
+        self.moveCount += 1.0
         tempFaces = self.faces
         tempFaces = self.XtoY(tempFaces)
         tempFaces = self.xRegTurn(tempFaces,1)
         tempFaces = self.YtoX(tempFaces)
         self.faces = tempFaces
+        self.currentFit = self.fitness()
+        if self.currentFit > self.bestFit:
+            self.bestFit = self.currentFit
 
     def move_r(self):
-        self.moveCount += 1
+        self.moveCount += 1.0
         tempFaces = self.faces
         tempFaces = self.XtoY(tempFaces)
         tempFaces = self.xAntiTurn(tempFaces,2)
         tempFaces = self.YtoX(tempFaces)
         self.faces = tempFaces
+        self.currentFit = self.fitness()
+        if self.currentFit > self.bestFit:
+            self.bestFit = self.currentFit
 
     def move_f(self):
-        self.moveCount += 1
+        self.moveCount += 1.0
         tempFaces = self.faces
         tempFaces = self.XtoZ(tempFaces)
         tempFaces = self.xRegTurn(tempFaces,1)
         tempFaces = self.ZtoX(tempFaces)
         self.faces = tempFaces
+        self.currentFit = self.fitness()
+        if self.currentFit > self.bestFit:
+            self.bestFit = self.currentFit
 
     def move_b(self):
-        self.moveCount += 1
+        self.moveCount += 1.0
         tempFaces = self.faces
         tempFaces = self.XtoZ(tempFaces)
         tempFaces = self.xAntiTurn(tempFaces,2)
         tempFaces = self.ZtoX(tempFaces)
         self.faces = tempFaces
+        self.currentFit = self.fitness()
+        if self.currentFit > self.bestFit:
+            self.bestFit = self.currentFit
 
     def move_Uu(self):
-        self.moveCount += 1
+        self.moveCount += 1.0
         tempFaces = self.faces
         tempFaces = self.xRegTurn(tempFaces,0)
         tempFaces = self.xRegTurn(tempFaces,1)
         tempFaces = self.rotateFace(tempFaces,4,True)
         self.faces = tempFaces
+        self.currentFit = self.fitness()
+        if self.currentFit > self.bestFit:
+            self.bestFit = self.currentFit
 
     def move_Dd(self):
-        self.moveCount += 1
+        self.moveCount += 1.0
         tempFaces = self.faces
         tempFaces = self.xAntiTurn(tempFaces,2)
         tempFaces = self.xAntiTurn(tempFaces,3)
         tempFaces = self.rotateFace(tempFaces,5,True)
         self.faces = tempFaces
+        self.currentFit = self.fitness()
+        if self.currentFit > self.bestFit:
+            self.bestFit = self.currentFit
 
     def move_Ll(self):
-        self.moveCount += 1
+        self.moveCount += 1.0
         tempFaces = self.faces
         tempFaces = self.XtoY(tempFaces)
         tempFaces = self.xRegTurn(tempFaces,0)
@@ -407,9 +459,12 @@ class Cube(object):
         tempFaces = self.rotateFace(tempFaces,4,True)
         tempFaces = self.YtoX(tempFaces)
         self.faces = tempFaces
+        self.currentFit = self.fitness()
+        if self.currentFit > self.bestFit:
+            self.bestFit = self.currentFit
 
     def move_Rr(self):
-        self.moveCount += 1
+        self.moveCount += 1.0
         tempFaces = self.faces
         tempFaces = self.XtoY(tempFaces)
         tempFaces = self.xAntiTurn(tempFaces,2)
@@ -417,9 +472,12 @@ class Cube(object):
         tempFaces = self.rotateFace(tempFaces,5,True)
         tempFaces = self.YtoX(tempFaces)
         self.faces = tempFaces
+        self.currentFit = self.fitness()
+        if self.currentFit > self.bestFit:
+            self.bestFit = self.currentFit
 
     def move_Ff(self):
-        self.moveCount += 1
+        self.moveCount += 1.0
         tempFaces = self.faces
         tempFaces = self.XtoZ(tempFaces)
         tempFaces = self.xRegTurn(tempFaces,0)
@@ -427,9 +485,12 @@ class Cube(object):
         tempFaces = self.rotateFace(tempFaces,4,True)
         tempFaces = self.ZtoX(tempFaces)
         self.faces = tempFaces
+        self.currentFit = self.fitness()
+        if self.currentFit > self.bestFit:
+            self.bestFit = self.currentFit
 
     def move_Bb(self):
-        self.moveCount += 1
+        self.moveCount += 1.0
         tempFaces = self.faces
         tempFaces = self.XtoZ(tempFaces)
         tempFaces = self.xAntiTurn(tempFaces,2)
@@ -437,119 +498,164 @@ class Cube(object):
         tempFaces = self.rotateFace(tempFaces,5,True)
         tempFaces = self.ZtoX(tempFaces)
         self.faces = tempFaces
+        self.currentFit = self.fitness()
+        if self.currentFit > self.bestFit:
+            self.bestFit = self.currentFit
 
     def move_Ua(self):
-        self.moveCount += 1
+        self.moveCount += 1.0
         tempFaces = self.faces
         tempFaces = self.xAntiTurn(tempFaces,0)
         tempFaces = self.rotateFace(tempFaces,4,False)
         self.faces = tempFaces
+        self.currentFit = self.fitness()
+        if self.currentFit > self.bestFit:
+            self.bestFit = self.currentFit
 
     def move_Da(self):
-        self.moveCount += 1
+        self.moveCount += 1.0
         tempFaces = self.faces
         tempFaces = self.xRegTurn(tempFaces,3)
         tempFaces = self.rotateFace(tempFaces,5,False)
         self.faces = tempFaces
+        self.currentFit = self.fitness()
+        if self.currentFit > self.bestFit:
+            self.bestFit = self.currentFit
 
     def move_La(self):
-        self.moveCount += 1
+        self.moveCount += 1.0
         tempFaces = self.faces
         tempFaces = self.XtoY(tempFaces)
         tempFaces = self.xAntiTurn(tempFaces,0)
         tempFaces = self.rotateFace(tempFaces,4,False)
         tempFaces = self.YtoX(tempFaces)
         self.faces = tempFaces
+        self.currentFit = self.fitness()
+        if self.currentFit > self.bestFit:
+            self.bestFit = self.currentFit
 
     def move_Ra(self):
-        self.moveCount += 1
+        self.moveCount += 1.0
         tempFaces = self.faces
         tempFaces = self.XtoY(tempFaces)
         tempFaces = self.xRegTurn(tempFaces,3)
         tempFaces = self.rotateFace(tempFaces,5,False)
         tempFaces = self.YtoX(tempFaces)
         self.faces = tempFaces
+        self.currentFit = self.fitness()
+        if self.currentFit > self.bestFit:
+            self.bestFit = self.currentFit
 
     def move_Fa(self):
-        self.moveCount += 1
+        self.moveCount += 1.0
         tempFaces = self.faces
         tempFaces = self.XtoZ(tempFaces)
         tempFaces = self.xAntiTurn(tempFaces,0)
         tempFaces = self.rotateFace(tempFaces,4,False)
         tempFaces = self.ZtoX(tempFaces)
         self.faces = tempFaces
+        self.currentFit = self.fitness()
+        if self.currentFit > self.bestFit:
+            self.bestFit = self.currentFit
 
     def move_Ba(self):
-        self.moveCount += 1
+        self.moveCount += 1.0
         tempFaces = self.faces
         tempFaces = self.XtoZ(tempFaces)
         tempFaces = self.xRegTurn(tempFaces,3)
         tempFaces = self.rotateFace(tempFaces,5,False)
         tempFaces = self.ZtoX(tempFaces)
         self.faces = tempFaces
+        self.currentFit = self.fitness()
+        if self.currentFit > self.bestFit:
+            self.bestFit = self.currentFit
 
     def move_ua(self):
-        self.moveCount += 1
+        self.moveCount += 1.0
         tempFaces = self.faces
         tempFaces = self.xAntiTurn(tempFaces,1)
         self.faces = tempFaces
+        self.currentFit = self.fitness()
+        if self.currentFit > self.bestFit:
+            self.bestFit = self.currentFit
 
     def move_da(self):
-        self.moveCount += 1
+        self.moveCount += 1.0
         tempFaces = self.faces
         tempFaces = self.xRegTurn(tempFaces,2)
         self.faces = tempFaces
+        self.currentFit = self.fitness()
+        if self.currentFit > self.bestFit:
+            self.bestFit = self.currentFit
 
     def move_la(self):
-        self.moveCount += 1
+        self.moveCount += 1.0
         tempFaces = self.faces
         tempFaces = self.XtoY(tempFaces)
         tempFaces = self.xAntiTurn(tempFaces,1)
         tempFaces = self.YtoX(tempFaces)
         self.faces = tempFaces
+        self.currentFit = self.fitness()
+        if self.currentFit > self.bestFit:
+            self.bestFit = self.currentFit
 
     def move_ra(self):
-        self.moveCount += 1
+        self.moveCount += 1.0
         tempFaces = self.faces
         tempFaces = self.XtoY(tempFaces)
         tempFaces = self.xRegTurn(tempFaces,2)
         tempFaces = self.YtoX(tempFaces)
         self.faces = tempFaces
+        self.currentFit = self.fitness()
+        if self.currentFit > self.bestFit:
+            self.bestFit = self.currentFit
 
     def move_fa(self):
-        self.moveCount += 1
+        self.moveCount += 1.0
         tempFaces = self.faces
         tempFaces = self.XtoZ(tempFaces)
         tempFaces = self.xAntiTurn(tempFaces,1)
         tempFaces = self.ZtoX(tempFaces)
         self.faces = tempFaces
+        self.currentFit = self.fitness()
+        if self.currentFit > self.bestFit:
+            self.bestFit = self.currentFit
 
     def move_ba(self):
-        self.moveCount += 1
+        self.moveCount += 1.0
         tempFaces = self.faces
         tempFaces = self.XtoZ(tempFaces)
         tempFaces = self.xRegTurn(tempFaces,2)
         tempFaces = self.ZtoX(tempFaces)
         self.faces = tempFaces
+        self.currentFit = self.fitness()
+        if self.currentFit > self.bestFit:
+            self.bestFit = self.currentFit
 
     def move_Uua(self):
-        self.moveCount += 1
+        self.moveCount += 1.0
         tempFaces = self.faces
         tempFaces = self.xAntiTurn(tempFaces,0)
         tempFaces = self.xAntiTurn(tempFaces,1)
         tempFaces = self.rotateFace(tempFaces,4,False)
         self.faces = tempFaces
+        self.currentFit = self.fitness()
+        if self.currentFit > self.bestFit:
+            self.bestFit = self.currentFit
 
     def move_Dda(self):
-        self.moveCount += 1
+        self.moveCount += 1.0
         tempFaces = self.faces
         tempFaces = self.xRegTurn(tempFaces,2)
         tempFaces = self.xRegTurn(tempFaces,3)
         tempFaces = self.rotateFace(tempFaces,5,False)
         self.faces = tempFaces
+        self.currentFit = self.fitness()
+        if self.currentFit > self.bestFit:
+            self.bestFit = self.currentFit
 
     def move_Lla(self):
-        self.moveCount += 1
+        self.moveCount += 1.0
         tempFaces = self.faces
         tempFaces = self.XtoY(tempFaces)
         tempFaces = self.xAntiTurn(tempFaces,0)
@@ -557,9 +663,12 @@ class Cube(object):
         tempFaces = self.rotateFace(tempFaces,4,False)
         tempFaces = self.YtoX(tempFaces)
         self.faces = tempFaces
+        self.currentFit = self.fitness()
+        if self.currentFit > self.bestFit:
+            self.bestFit = self.currentFit
 
     def move_Rra(self):
-        self.moveCount += 1
+        self.moveCount += 1.0
         tempFaces = self.faces
         tempFaces = self.XtoY(tempFaces)
         tempFaces = self.xRegTurn(tempFaces,2)
@@ -567,9 +676,12 @@ class Cube(object):
         tempFaces = self.rotateFace(tempFaces,5,False)
         tempFaces = self.YtoX(tempFaces)
         self.faces = tempFaces
+        self.currentFit = self.fitness()
+        if self.currentFit > self.bestFit:
+            self.bestFit = self.currentFit
 
     def move_Ffa(self):
-        self.moveCount += 1
+        self.moveCount += 1.0
         tempFaces = self.faces
         tempFaces = self.XtoZ(tempFaces)
         tempFaces = self.xAntiTurn(tempFaces,0)
@@ -577,9 +689,12 @@ class Cube(object):
         tempFaces = self.rotateFace(tempFaces,4,False)
         tempFaces = self.ZtoX(tempFaces)
         self.faces = tempFaces
+        self.currentFit = self.fitness()
+        if self.currentFit > self.bestFit:
+            self.bestFit = self.currentFit
 
     def move_Bba(self):
-        self.moveCount += 1
+        self.moveCount += 1.0
         tempFaces = self.faces
         tempFaces = self.XtoZ(tempFaces)
         tempFaces = self.xRegTurn(tempFaces,2)
@@ -587,27 +702,36 @@ class Cube(object):
         tempFaces = self.rotateFace(tempFaces,5,False)
         tempFaces = self.ZtoX(tempFaces)
         self.faces = tempFaces
+        self.currentFit = self.fitness()
+        if self.currentFit > self.bestFit:
+            self.bestFit = self.currentFit
 
     def move_U2(self):
-        self.moveCount += 1
+        self.moveCount += 1.0
         tempFaces = self.faces
         tempFaces = self.xRegTurn(tempFaces,0)
         tempFaces = self.xRegTurn(tempFaces,0)
         tempFaces = self.rotateFace(tempFaces,4,True)
         tempFaces = self.rotateFace(tempFaces,4,True)
         self.faces = tempFaces
+        self.currentFit = self.fitness()
+        if self.currentFit > self.bestFit:
+            self.bestFit = self.currentFit
 
     def move_D2(self):
-        self.moveCount += 1
+        self.moveCount += 1.0
         tempFaces = self.faces
         tempFaces = self.xAntiTurn(tempFaces,3)
         tempFaces = self.xAntiTurn(tempFaces,3)
         tempFaces = self.rotateFace(tempFaces,5,True)
         tempFaces = self.rotateFace(tempFaces,5,True)
         self.faces = tempFaces
+        self.currentFit = self.fitness()
+        if self.currentFit > self.bestFit:
+            self.bestFit = self.currentFit
 
     def move_L2(self):
-        self.moveCount += 1
+        self.moveCount += 1.0
         tempFaces = self.faces
         tempFaces = self.XtoY(tempFaces)
         tempFaces = self.xRegTurn(tempFaces,0)
@@ -616,9 +740,12 @@ class Cube(object):
         tempFaces = self.rotateFace(tempFaces,4,True)
         tempFaces = self.YtoX(tempFaces)
         self.faces = tempFaces
+        self.currentFit = self.fitness()
+        if self.currentFit > self.bestFit:
+            self.bestFit = self.currentFit
 
     def move_R2(self):
-        self.moveCount += 1
+        self.moveCount += 1.0
         tempFaces = self.faces
         tempFaces = self.XtoY(tempFaces)
         tempFaces = self.xAntiTurn(tempFaces,3)
@@ -627,9 +754,12 @@ class Cube(object):
         tempFaces = self.rotateFace(tempFaces,5,True)
         tempFaces = self.YtoX(tempFaces)
         self.faces = tempFaces
+        self.currentFit = self.fitness()
+        if self.currentFit > self.bestFit:
+            self.bestFit = self.currentFit
 
     def move_F2(self):
-        self.moveCount += 1
+        self.moveCount += 1.0
         tempFaces = self.faces
         tempFaces = self.XtoZ(tempFaces)
         tempFaces = self.xRegTurn(tempFaces,0)
@@ -638,9 +768,12 @@ class Cube(object):
         tempFaces = self.rotateFace(tempFaces,4,True)
         tempFaces = self.ZtoX(tempFaces)
         self.faces = tempFaces
+        self.currentFit = self.fitness()
+        if self.currentFit > self.bestFit:
+            self.bestFit = self.currentFit
 
     def move_B2(self):
-        self.moveCount += 1
+        self.moveCount += 1.0
         tempFaces = self.faces
         tempFaces = self.XtoZ(tempFaces)
         tempFaces = self.xAntiTurn(tempFaces,3)
@@ -649,59 +782,80 @@ class Cube(object):
         tempFaces = self.rotateFace(tempFaces,5,True)
         tempFaces = self.ZtoX(tempFaces)
         self.faces = tempFaces
+        self.currentFit = self.fitness()
+        if self.currentFit > self.bestFit:
+            self.bestFit = self.currentFit
 
     def move_u2(self):
-        self.moveCount += 1
+        self.moveCount += 1.0
         tempFaces = self.faces
         tempFaces = self.xRegTurn(tempFaces,1)
         tempFaces = self.xRegTurn(tempFaces,1)
         self.faces = tempFaces
+        self.currentFit = self.fitness()
+        if self.currentFit > self.bestFit:
+            self.bestFit = self.currentFit
 
     def move_d2(self):
-        self.moveCount += 1
+        self.moveCount += 1.0
         tempFaces = self.faces
         tempFaces = self.xAntiTurn(tempFaces,2)
         tempFaces = self.xAntiTurn(tempFaces,2)
         self.faces = tempFaces
+        self.currentFit = self.fitness()
+        if self.currentFit > self.bestFit:
+            self.bestFit = self.currentFit
 
     def move_l2(self):
-        self.moveCount += 1
+        self.moveCount += 1.0
         tempFaces = self.faces
         tempFaces = self.XtoY(tempFaces)
         tempFaces = self.xRegTurn(tempFaces,1)
         tempFaces = self.xRegTurn(tempFaces,1)
         tempFaces = self.YtoX(tempFaces)
         self.faces = tempFaces
+        self.currentFit = self.fitness()
+        if self.currentFit > self.bestFit:
+            self.bestFit = self.currentFit
 
     def move_r2(self):
-        self.moveCount += 1
+        self.moveCount += 1.0
         tempFaces = self.faces
         tempFaces = self.XtoY(tempFaces)
         tempFaces = self.xAntiTurn(tempFaces,2)
         tempFaces = self.xAntiTurn(tempFaces,2)
         tempFaces = self.YtoX(tempFaces)
         self.faces = tempFaces
+        self.currentFit = self.fitness()
+        if self.currentFit > self.bestFit:
+            self.bestFit = self.currentFit
 
     def move_f2(self):
-        self.moveCount += 1
+        self.moveCount += 1.0
         tempFaces = self.faces
         tempFaces = self.XtoZ(tempFaces)
         tempFaces = self.xRegTurn(tempFaces,1)
         tempFaces = self.xRegTurn(tempFaces,1)
         tempFaces = self.ZtoX(tempFaces)
         self.faces = tempFaces
+        self.currentFit = self.fitness()
+        if self.currentFit > self.bestFit:
+            self.bestFit = self.currentFit
 
     def move_b2(self):
-        self.moveCount += 1
+        self.moveCount += 1.0
         tempFaces = self.faces
         tempFaces = self.XtoZ(tempFaces)
         tempFaces = self.xAntiTurn(tempFaces,2)
         tempFaces = self.xAntiTurn(tempFaces,2)
         tempFaces = self.ZtoX(tempFaces)
         self.faces = tempFaces
+        self.currentFit = self.fitness()
+        if self.currentFit > self.bestFit:
+            self.bestFit = self.currentFit
 
     def move_Uu2(self):
-        self.moveCount += 1
+        self.moveCount += 1.0
         tempFaces = self.faces
         tempFaces = self.xRegTurn(tempFaces,0)
         tempFaces = self.xRegTurn(tempFaces,1)
@@ -710,9 +864,12 @@ class Cube(object):
         tempFaces = self.rotateFace(tempFaces,4,True)
         tempFaces = self.rotateFace(tempFaces,4,True)
         self.faces = tempFaces
+        self.currentFit = self.fitness()
+        if self.currentFit > self.bestFit:
+            self.bestFit = self.currentFit
 
     def move_Dd2(self):
-        self.moveCount += 1
+        self.moveCount += 1.0
         tempFaces = self.faces
         tempFaces = self.xAntiTurn(tempFaces,2)
         tempFaces = self.xAntiTurn(tempFaces,3)
@@ -721,9 +878,12 @@ class Cube(object):
         tempFaces = self.rotateFace(tempFaces,5,True)
         tempFaces = self.rotateFace(tempFaces,5,True)
         self.faces = tempFaces
+        self.currentFit = self.fitness()
+        if self.currentFit > self.bestFit:
+            self.bestFit = self.currentFit
 
     def move_Ll2(self):
-        self.moveCount += 1
+        self.moveCount += 1.0
         tempFaces = self.faces
         tempFaces = self.XtoY(tempFaces)
         tempFaces = self.xRegTurn(tempFaces,0)
@@ -734,9 +894,12 @@ class Cube(object):
         tempFaces = self.rotateFace(tempFaces,4,True)
         tempFaces = self.YtoX(tempFaces)
         self.faces = tempFaces
+        self.currentFit = self.fitness()
+        if self.currentFit > self.bestFit:
+            self.bestFit = self.currentFit
 
     def move_Rr2(self):
-        self.moveCount += 1
+        self.moveCount += 1.0
         tempFaces = self.faces
         tempFaces = self.XtoY(tempFaces)
         tempFaces = self.xAntiTurn(tempFaces,2)
@@ -747,9 +910,12 @@ class Cube(object):
         tempFaces = self.rotateFace(tempFaces,5,True)
         tempFaces = self.YtoX(tempFaces)
         self.faces = tempFaces
+        self.currentFit = self.fitness()
+        if self.currentFit > self.bestFit:
+            self.bestFit = self.currentFit
 
     def move_Ff2(self):
-        self.moveCount += 1
+        self.moveCount += 1.0
         tempFaces = self.faces
         tempFaces = self.XtoZ(tempFaces)
         tempFaces = self.xRegTurn(tempFaces,0)
@@ -760,9 +926,12 @@ class Cube(object):
         tempFaces = self.rotateFace(tempFaces,4,True)
         tempFaces = self.ZtoX(tempFaces)
         self.faces = tempFaces
+        self.currentFit = self.fitness()
+        if self.currentFit > self.bestFit:
+            self.bestFit = self.currentFit
 
     def move_Bb2(self):
-        self.moveCount += 1
+        self.moveCount += 1.0
         tempFaces = self.faces
         tempFaces = self.XtoZ(tempFaces)
         tempFaces = self.xAntiTurn(tempFaces,2)
@@ -773,6 +942,9 @@ class Cube(object):
         tempFaces = self.rotateFace(tempFaces,5,True)
         tempFaces = self.ZtoX(tempFaces)
         self.faces = tempFaces
+        self.currentFit = self.fitness()
+        if self.currentFit > self.bestFit:
+            self.bestFit = self.currentFit
 
     def XtoY(self,faces):
         faces = self.rotateFace(faces,0,True)
@@ -911,7 +1083,9 @@ class Cube(object):
         return sum(faceTotals)
 
     def fitness2(self,faces):
-        return float("{0:.2f}".format(np.average([Counter(x for face in faces[y].tolist() for x in face).most_common(1)[0][1] for y in range(0,6)])))
+        if self.moveCount < 20:
+            return (self.moveCount/20.0)*(np.sum([Counter(x for face in faces[y].tolist() for x in face).most_common(1)[0][1] for y in range(0,6)]))
+        return np.sum([Counter(x for face in faces[y].tolist() for x in face).most_common(1)[0][1] for y in range(0,6)])
 
     def fitness3(self,faces):
         centerOptions = ['w','r','y','o','b','g']
