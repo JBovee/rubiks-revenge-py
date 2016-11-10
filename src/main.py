@@ -6,7 +6,7 @@ import numpy as np
 import random as rand
 import operator as op
 from functools import partial
-from deap import algorithms, creator, base, tools, gp, multiprocessing
+from deap import algorithms, creator, base, tools, gp
 import math
 
 '''
@@ -105,6 +105,18 @@ def prog7(out1, out2, out3, out4, out5, out6, out7):
 def prog8(out1, out2, out3, out4, out5, out6, out7, out8):
     return partial(progn, out1, out2, out3, out4, out5, out6, out7, out8)
 
+def prog9(out1, out2, out3, out4, out5, out6, out7, out8, out9):
+    return partial(progn, out1, out2, out3, out4, out5, out6, out7, out8, out9)
+
+def prog10(out1, out2, out3, out4, out5, out6, out7, out8, out9, out10):
+    return partial(progn, out1, out2, out3, out4, out5, out6, out7, out8, out9, out10)
+
+def prog11(out1, out2, out3, out4, out5, out6, out7, out8, out9, out10, out11):
+    return partial(progn, out1, out2, out3, out4, out5, out6, out7, out8, out9, out10, out11)
+
+def prog12(out1, out2, out3, out4, out5, out6, out7, out8, out9, out10, out11, out12):
+    return partial(progn, out1, out2, out3, out4, out5, out6, out7, out8, out9, out10, out11, out12)
+
 def loopn(n, arg):
     for i in xrange(n):
         arg()
@@ -141,6 +153,10 @@ pset.addPrimitive(prog5, 5)
 pset.addPrimitive(prog6, 6)
 pset.addPrimitive(prog7, 7)
 pset.addPrimitive(prog8, 8)
+pset.addPrimitive(prog9, 9)
+pset.addPrimitive(prog10, 10)
+pset.addPrimitive(prog11, 11)
+pset.addPrimitive(prog12, 12)
 pset.addPrimitive(loop2, 1)
 pset.addPrimitive(loop3, 1)
 #pset.addPrimitive(loop4, 1)
@@ -248,13 +264,16 @@ toolbox.register("individual", tools.initIterate, creator.Individual, toolbox.ex
 toolbox.register("population", tools.initRepeat, list, toolbox.individual)
 
 def evalCube(individual):
+    #print(individual)
     moves = gp.compile(individual, pset)
     testcube.run(moves)
-    return testcube.fitness(),
+    fit = testcube.fitness()
+    #print("fit:"+str(fit)+'\n')
+    return fit,
 
 toolbox.register("evaluate", evalCube)
-toolbox.register("select", tools.selTournament, tournsize=7)
-#toolbox.register("select", tools.selDoubleTournament, fitness_size=7, parsimony_size=1.4, fitness_first=False)
+#toolbox.register("select", tools.selTournament, tournsize=7)
+toolbox.register("select", tools.selDoubleTournament, fitness_size=7, parsimony_size=1.4, fitness_first=False)
 toolbox.register("mate", gp.cxOnePoint)
 toolbox.register("expr_mut", gp.genFull, min_=0, max_=2)
 toolbox.register("mutate", gp.mutUniform, expr=toolbox.expr_mut, pset=pset)
@@ -279,9 +298,7 @@ def main():
     #print(fitness1(testcube.getFaces()))
     #testcube.printCube()
     testcube._store()
-
-    pool = multiprocessing.Pool(processes=4)
-    toolbox.register("map", pool.map)
+    testcube._restore()
 
     pop = toolbox.population(n=80)
     hof=tools.HallOfFame(2)
@@ -307,8 +324,6 @@ def main():
     testcube.run(bestMoves)
     #testcube.printCube()
     print
-
-    pool.close()
 
     return pop, stats, hof
 
